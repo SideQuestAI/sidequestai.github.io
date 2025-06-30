@@ -5,7 +5,7 @@ This folder contains the assets for your SideQuestAI application. Place your cus
 ## 📁 File Structure
 
 ```
-public/assets/
+public/assets
 ├── logo.png          # App logo (recommended: 32x32px, PNG format)
 ├── preview.mp4       # App preview video (recommended: 16:9 aspect ratio)
 ├── video-poster.jpg  # Video poster/thumbnail (optional)
