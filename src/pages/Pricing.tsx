@@ -119,7 +119,7 @@ const Pricing = () => {
         "Priority feature requests",
         "Premium support",
         "Early access to new features",
-        "Custom Mentior options",
+        "Custom Mentor options",
         "Advanced reporting tools",
       ],
       buttonText: "Go Ultimate",
