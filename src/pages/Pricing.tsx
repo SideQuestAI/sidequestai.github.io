@@ -405,11 +405,6 @@ const Pricing = () => {
                 answer:
                   "AI tokens are credits used to generate course content. Different actions consume different amounts of tokens.",
               },
-              {
-                question: "Is there a refund policy?",
-                answer:
-                  "Yes, we offer a 30-day money-back guarantee on all paid plans. No questions asked.",
-              },
             ].map((faq, index) => (
               <motion.div
                 key={index}
