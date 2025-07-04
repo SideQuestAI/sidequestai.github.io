@@ -405,6 +405,49 @@ const Pricing = () => {
                 answer:
                   "AI tokens are credits used to generate course content. Different actions consume different amounts of tokens.",
               },
+              {
+                question: "How many tokens does each action use?",
+                answer: (
+                  <div>
+                    <p className="mb-2">Here are the average token costs for common actions. Actual usage may vary based on content length and complexity:</p>
+                    <div className="overflow-x-auto">
+                      <table className="min-w-full text-left text-slate-300 border-collapse text-sm">
+                        <thead>
+                          <tr>
+                            <th className="py-2 px-4 border-b border-slate-700 font-semibold">Action</th>
+                            <th className="py-2 px-4 border-b border-slate-700 font-semibold">Avg. Tokens Used</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td className="py-2 px-4 border-b border-slate-800">Generate a full course</td>
+                            <td className="py-2 px-4 border-b border-slate-800">2,500–5,000</td>
+                          </tr>
+                          <tr>
+                            <td className="py-2 px-4 border-b border-slate-800">Generate a lesson/module</td>
+                            <td className="py-2 px-4 border-b border-slate-800">500–1,000</td>
+                          </tr>
+                          <tr>
+                            <td className="py-2 px-4 border-b border-slate-800">Quiz or assessment</td>
+                            <td className="py-2 px-4 border-b border-slate-800">200–500</td>
+                          </tr>
+                          <tr>
+                            <td className="py-2 px-4 border-b border-slate-800">Course summary/outline</td>
+                            <td className="py-2 px-4 border-b border-slate-800">100–300</td>
+                          </tr>
+                          <tr>
+                            <td className="py-2 px-4 border-b border-slate-800">Regenerate content</td>
+                            <td className="py-2 px-4 border-b border-slate-800">Varies (usually 50–500)</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p className="text-xs text-slate-500 mt-2">
+                      These are average values. You can track your exact token usage in your dashboard.
+                    </p>
+                  </div>
+                ),
+              },
             ].map((faq, index) => (
               <motion.div
                 key={index}
