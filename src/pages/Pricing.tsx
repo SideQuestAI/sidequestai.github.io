@@ -75,7 +75,7 @@ const Pricing = () => {
       period: "/month",
       description: "Great for individual entrepreneurs",
       icon: Zap,
-      popular: true,
+      popular: false,
       features: [
         "50,000 AI tokens per month",
         "Create up to 5 courses",
@@ -92,7 +92,7 @@ const Pricing = () => {
       period: "/month",
       description: "Perfect for growing businesses",
       icon: Crown,
-      popular: false,
+      popular: true,
       features: [
         "100,000 AI tokens per month",
         "Unlimited course creation",
@@ -116,11 +116,11 @@ const Pricing = () => {
       features: [
         "Unlimited tokens per month",
         "Everything in Pro",
-        "Phone support",
-        "Custom integrations",
-        "Unlimited team members",
-        "Advanced API features",
         "Priority feature requests",
+        "Premium support",
+        "Early access to new features",
+        "Custom Mentior options",
+        "Advanced reporting tools",
       ],
       buttonText: "Go Ultimate",
       gradient: "from-pink-500 to-red-500",
