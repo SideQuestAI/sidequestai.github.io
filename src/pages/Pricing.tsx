@@ -408,9 +408,9 @@ const Pricing = () => {
               {
                 question: "How many tokens does each action use?",
                 answer: (
-                  <div>
-                    <p className="mb-2">Here are the average token costs for common actions. Actual usage may vary based on content length and complexity:</p>
-                    <div className="overflow-x-auto">
+                  <details>
+                    <summary className="cursor-pointer text-blue-400 hover:underline mb-2">Show average token costs for common actions</summary>
+                    <div className="overflow-x-auto mt-2">
                       <table className="min-w-full text-left text-slate-300 border-collapse text-sm">
                         <thead>
                           <tr>
@@ -445,7 +445,7 @@ const Pricing = () => {
                     <p className="text-xs text-slate-500 mt-2">
                       These are average values. You can track your exact token usage in your dashboard.
                     </p>
-                  </div>
+                  </details>
                 ),
               },
             ].map((faq, index) => (
@@ -501,53 +501,6 @@ const Pricing = () => {
             </div>
           </div>
         </motion.div>
-      </section>
-
-      {/* Token Usage Section */}
-      <section className="py-12 px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="max-w-4xl mx-auto glass p-8 rounded-2xl border border-white/20">
-          <h2 className="text-3xl font-display font-bold mb-4 text-white text-center">
-            How Many Tokens Do I Need?
-          </h2>
-          <p className="text-slate-400 mb-6 text-center">
-            Here are the average token costs for common actions. Actual usage may vary based on content length and complexity.
-          </p>
-          <div className="overflow-x-auto">
-            <table className="min-w-full text-left text-slate-300 border-collapse">
-              <thead>
-                <tr>
-                  <th className="py-2 px-4 border-b border-slate-700 font-semibold">Action</th>
-                  <th className="py-2 px-4 border-b border-slate-700 font-semibold">Avg. Tokens Used</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td className="py-2 px-4 border-b border-slate-800">Generate a full course</td>
-                  <td className="py-2 px-4 border-b border-slate-800">2,500–5,000</td>
-                </tr>
-                <tr>
-                  <td className="py-2 px-4 border-b border-slate-800">Generate a lesson/module</td>
-                  <td className="py-2 px-4 border-b border-slate-800">500–1,000</td>
-                </tr>
-                <tr>
-                  <td className="py-2 px-4 border-b border-slate-800">Quiz or assessment</td>
-                  <td className="py-2 px-4 border-b border-slate-800">200–500</td>
-                </tr>
-                <tr>
-                  <td className="py-2 px-4 border-b border-slate-800">Course summary/outline</td>
-                  <td className="py-2 px-4 border-b border-slate-800">100–300</td>
-                </tr>
-                <tr>
-                  <td className="py-2 px-4 border-b border-slate-800">Regenerate content</td>
-                  <td className="py-2 px-4 border-b border-slate-800">Varies (usually 50–500)</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <p className="text-xs text-slate-500 mt-4 text-center">
-            These are average values. You can track your exact token usage in your dashboard.
-          </p>
-        </div>
       </section>
 
       {/* Footer */}
