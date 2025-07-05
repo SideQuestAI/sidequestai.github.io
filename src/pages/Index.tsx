@@ -98,11 +98,12 @@ const Index = () => {
   const floatVariants = {
     animate: {
       y: [0, -20, 0],
-      transition: {
-        duration: 4,
-        repeat: Infinity,
-        ease: "easeInOut",
-      },
+      transition:
+        {
+          duration: 4,
+          repeat: Infinity,
+          ease: "easeInOut",
+        },
     },
   };
 
@@ -211,12 +212,12 @@ const Index = () => {
                 </Link>
               </motion.div>
 
-              <MorphingButton
-                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-              >
-                Get Started
-                <ArrowRight className="w-4 h-4" />
-              </MorphingButton>
+              <Link to="/pricing#free">
+                <MorphingButton>
+                  Get Started
+                  <ArrowRight className="w-4 h-4" />
+                </MorphingButton>
+              </Link>
             </div>
           </div>
         </div>
