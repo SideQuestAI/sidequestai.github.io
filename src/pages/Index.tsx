@@ -67,16 +67,6 @@ const Index = () => {
     }, 1500);
   };
 
-  const handleTryFree = () => {
-    showInfo(
-      "Try Free Plan",
-      "Checking out our free plan with 5,000 AI tokens!",
-    );
-    setTimeout(() => {
-      window.location.hash = "#pricing-free";
-    }, 1000);
-  };
-
   const handleLearnMore = () => {
     showInfo("Learn More", "Scrolling to features section...");
     document.getElementById("features")?.scrollIntoView({ behavior: "smooth" });
@@ -186,7 +176,7 @@ const Index = () => {
                 whileTap={{ scale: 0.95 }}
               >
                 <Link
-                  to="#download"
+                  to="/download"
                   className="smooth-text text-slate-300 hover:text-white transition-all duration-500 font-medium relative group"
                 >
                   Download
@@ -208,7 +198,7 @@ const Index = () => {
                 whileTap={{ scale: 0.95 }}
               >
                 <Link
-                  to="#pricing"
+                  to="/pricing"
                   className="smooth-text text-slate-300 hover:text-white transition-all duration-500 font-medium relative group"
                 >
                   Pricing
@@ -333,14 +323,12 @@ const Index = () => {
                 Get the App
               </MorphingButton>
 
-              <MorphingButton
-                variant="secondary"
-                size="lg"
-                onClick={handleTryFree}
-              >
-                <Zap className="w-5 h-5" />
-                Try Free
-              </MorphingButton>
+              <Link to="/pricing#free">
+                <MorphingButton variant="secondary" size="lg">
+                  <Zap className="w-5 h-5" />
+                  Try Free
+                </MorphingButton>
+              </Link>
             </motion.div>
           </div>
 
@@ -725,7 +713,7 @@ const Index = () => {
                   Download SideQuestAI
                 </MorphingButton>
 
-                <Link to="#pricing">
+                <Link to="/pricing">
                   <MorphingButton variant="secondary" size="lg">
                     <Rocket className="w-5 h-5" />
                     View Plans
@@ -763,13 +751,13 @@ const Index = () => {
               </h3>
               <div className="space-y-2 text-slate-400">
                 <Link
-                  to="#download"
+                  to="/download"
                   className="block hover:text-white transition-colors duration-300 hover:translate-x-1"
                 >
                   Download
                 </Link>
                 <Link
-                  to="#pricing"
+                  to="/pricing"
                   className="block hover:text-white transition-colors duration-300 hover:translate-x-1"
                 >
                   Pricing
@@ -823,7 +811,7 @@ const Index = () => {
             <div className="flex space-x-6 mt-4 md:mt-0">
               <motion.div whileHover={{ scale: 1.1 }}>
                 <Link
-                  to="#terms"
+                  to="/terms"
                   className="text-slate-400 hover:text-white transition-colors duration-300"
                 >
                   Terms
@@ -831,7 +819,7 @@ const Index = () => {
               </motion.div>
               <motion.div whileHover={{ scale: 1.1 }}>
                 <Link
-                  to="#privacy"
+                  to="/privacy"
                   className="text-slate-400 hover:text-white transition-colors duration-300"
                 >
                   Privacy
@@ -839,7 +827,7 @@ const Index = () => {
               </motion.div>
               <motion.div whileHover={{ scale: 1.1 }}>
                 <Link
-                  to="#refund"
+                  to="/refund"
                   className="text-slate-400 hover:text-white transition-colors duration-300"
                 >
                   Refund
