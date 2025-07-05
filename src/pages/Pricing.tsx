@@ -197,21 +197,21 @@ const Pricing = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <motion.div whileHover={{ scale: 1.05 }}>
-              <Link to="/" className="flex items-center space-x-2">
+              <Link to="/#" className="flex items-center space-x-2">
                 <DynamicLogo animate={true} />
               </Link>
             </motion.div>
 
             <div className="flex items-center space-x-6">
               <Link
-                to="/"
+                to="/#"
                 className="text-slate-300 hover:text-white transition-colors font-medium relative group"
               >
                 Home
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 group-hover:w-full transition-all duration-300"></span>
               </Link>
               <Link
-                to="/download"
+                to="/#download"
                 className="text-slate-300 hover:text-white transition-colors font-medium relative group"
               >
                 Download
@@ -492,7 +492,7 @@ const Pricing = () => {
                 <Rocket className="w-5 h-5" />
                 Start Free Today
               </MorphingButton>
-              <Link to="/download">
+              <Link to="/#download">
                 <MorphingButton variant="secondary" size="lg">
                   <ArrowRight className="w-5 h-5" />
                   Download App
@@ -513,31 +513,31 @@ const Pricing = () => {
 
             <div className="flex space-x-6 text-sm text-slate-400">
               <Link
-                to="/"
+                to="/#"
                 className="hover:text-white transition-colors duration-300"
               >
                 Home
               </Link>
               <Link
-                to="/download"
+                to="/#download"
                 className="hover:text-white transition-colors duration-300"
               >
                 Download
               </Link>
               <Link
-                to="/privacy"
+                to="/#privacy"
                 className="hover:text-white transition-colors duration-300"
               >
                 Privacy
               </Link>
               <Link
-                to="/terms"
+                to="/#terms"
                 className="hover:text-white transition-colors duration-300"
               >
                 Terms
               </Link>
               <Link
-                to="/refund"
+                to="/#refund"
                 className="hover:text-white transition-colors duration-300"
               >
                 Refund

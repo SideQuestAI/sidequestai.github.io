@@ -63,7 +63,7 @@ const Index = () => {
       "Redirecting to download the SideQuestAI app...",
     );
     setTimeout(() => {
-      window.location.href = "/download";
+      window.location.href = "/#download";
     }, 1500);
   };
 
@@ -73,7 +73,7 @@ const Index = () => {
       "Checking out our free plan with 5,000 AI tokens!",
     );
     setTimeout(() => {
-      window.location.href = "/pricing#free";
+      window.location.href = "/#pricing-free";
     }, 1000);
   };
 
@@ -154,8 +154,8 @@ const Index = () => {
       {/* Navigation */}
       <motion.nav
         className="sticky top-0 z-50 watery-nav"
-        initial={{ y: -100, opacity: 0, blur: 10 }}
-        animate={{ y: 0, opacity: 1, blur: 0 }}
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
         transition={{
           duration: 1.2,
           type: "spring",
@@ -186,7 +186,7 @@ const Index = () => {
                 whileTap={{ scale: 0.95 }}
               >
                 <Link
-                  to="/download"
+                  to="/#download"
                   className="smooth-text text-slate-300 hover:text-white transition-all duration-500 font-medium relative group"
                 >
                   Download
@@ -208,7 +208,7 @@ const Index = () => {
                 whileTap={{ scale: 0.95 }}
               >
                 <Link
-                  to="/pricing"
+                  to="/#pricing"
                   className="smooth-text text-slate-300 hover:text-white transition-all duration-500 font-medium relative group"
                 >
                   Pricing
@@ -625,20 +625,23 @@ const Index = () => {
                 featureKey: "milestones" as keyof typeof features,
               },
             ].map((feature, index) => (
-              <motion.div key={index} variants={itemVariants}>
+              <motion.div
+                key={index}
+                variants={itemVariants}
+                whileHover={{
+                  y: -12,
+                  scale: 1.03,
+                  rotateY: 5,
+                  transition: {
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 20,
+                  },
+                }}
+              >
                 <Card
                   className="p-6 watery-card border-2 border-white/10 hover:border-white/30 glow h-full group cursor-pointer elastic-hover"
                   onClick={() => handleFeatureClick(feature.featureKey)}
-                  whileHover={{
-                    y: -12,
-                    scale: 1.03,
-                    rotateY: 5,
-                    transition: {
-                      type: "spring",
-                      stiffness: 300,
-                      damping: 20,
-                    },
-                  }}
                 >
                   <CardHeader className="pb-4">
                     <motion.div
@@ -720,7 +723,7 @@ const Index = () => {
                   Download SideQuestAI
                 </MorphingButton>
 
-                <Link to="/pricing">
+                <Link to="/#pricing">
                   <MorphingButton variant="secondary" size="lg">
                     <Rocket className="w-5 h-5" />
                     View Plans
@@ -758,13 +761,13 @@ const Index = () => {
               </h3>
               <div className="space-y-2 text-slate-400">
                 <Link
-                  to="/download"
+                  to="/#download"
                   className="block hover:text-white transition-colors duration-300 hover:translate-x-1"
                 >
                   Download
                 </Link>
                 <Link
-                  to="/pricing"
+                  to="/#pricing"
                   className="block hover:text-white transition-colors duration-300 hover:translate-x-1"
                 >
                   Pricing
@@ -818,7 +821,7 @@ const Index = () => {
             <div className="flex space-x-6 mt-4 md:mt-0">
               <motion.div whileHover={{ scale: 1.1 }}>
                 <Link
-                  to="/terms"
+                  to="/#terms"
                   className="text-slate-400 hover:text-white transition-colors duration-300"
                 >
                   Terms
@@ -826,7 +829,7 @@ const Index = () => {
               </motion.div>
               <motion.div whileHover={{ scale: 1.1 }}>
                 <Link
-                  to="/privacy"
+                  to="/#privacy"
                   className="text-slate-400 hover:text-white transition-colors duration-300"
                 >
                   Privacy
@@ -834,7 +837,7 @@ const Index = () => {
               </motion.div>
               <motion.div whileHover={{ scale: 1.1 }}>
                 <Link
-                  to="/refund"
+                  to="/#refund"
                   className="text-slate-400 hover:text-white transition-colors duration-300"
                 >
                   Refund
