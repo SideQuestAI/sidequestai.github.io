@@ -63,7 +63,7 @@ const Index = () => {
       "Redirecting to download the SideQuestAI app...",
     );
     setTimeout(() => {
-      window.location.href = "/#download";
+      window.location.hash = "#download";
     }, 1500);
   };
 
@@ -73,7 +73,7 @@ const Index = () => {
       "Checking out our free plan with 5,000 AI tokens!",
     );
     setTimeout(() => {
-      window.location.href = "/#pricing-free";
+      window.location.hash = "#pricing-free";
     }, 1000);
   };
 
@@ -186,7 +186,7 @@ const Index = () => {
                 whileTap={{ scale: 0.95 }}
               >
                 <Link
-                  to="/#download"
+                  to="#download"
                   className="smooth-text text-slate-300 hover:text-white transition-all duration-500 font-medium relative group"
                 >
                   Download
@@ -208,7 +208,7 @@ const Index = () => {
                 whileTap={{ scale: 0.95 }}
               >
                 <Link
-                  to="/#pricing"
+                  to="#pricing"
                   className="smooth-text text-slate-300 hover:text-white transition-all duration-500 font-medium relative group"
                 >
                   Pricing
@@ -485,7 +485,8 @@ const Index = () => {
             viewport={{ once: true }}
           >
             <h2 className="text-5xl font-display font-bold mb-6">
-              How <span className="text-gradient">SideQuestAI</span> Works
+              How{" "}
+              <span className="text-gradient">SideQuestAI</span> Works
             </h2>
             <p className="text-xl text-slate-400 max-w-2xl mx-auto">
               Three simple steps to transform any side hustle idea into a
@@ -561,7 +562,8 @@ const Index = () => {
             viewport={{ once: true }}
           >
             <h2 className="text-5xl font-display font-bold mb-6">
-              Why Choose <span className="text-gradient">SideQuestAI?</span>
+              Why Choose{" "}
+              <span className="text-gradient">SideQuestAI?</span>
             </h2>
             <p className="text-xl text-slate-400 max-w-2xl mx-auto">
               Cutting-edge AI technology meets practical business education
@@ -723,7 +725,7 @@ const Index = () => {
                   Download SideQuestAI
                 </MorphingButton>
 
-                <Link to="/#pricing">
+                <Link to="#pricing">
                   <MorphingButton variant="secondary" size="lg">
                     <Rocket className="w-5 h-5" />
                     View Plans
@@ -761,13 +763,13 @@ const Index = () => {
               </h3>
               <div className="space-y-2 text-slate-400">
                 <Link
-                  to="/#download"
+                  to="#download"
                   className="block hover:text-white transition-colors duration-300 hover:translate-x-1"
                 >
                   Download
                 </Link>
                 <Link
-                  to="/#pricing"
+                  to="#pricing"
                   className="block hover:text-white transition-colors duration-300 hover:translate-x-1"
                 >
                   Pricing
@@ -821,7 +823,7 @@ const Index = () => {
             <div className="flex space-x-6 mt-4 md:mt-0">
               <motion.div whileHover={{ scale: 1.1 }}>
                 <Link
-                  to="/#terms"
+                  to="#terms"
                   className="text-slate-400 hover:text-white transition-colors duration-300"
                 >
                   Terms
@@ -829,7 +831,7 @@ const Index = () => {
               </motion.div>
               <motion.div whileHover={{ scale: 1.1 }}>
                 <Link
-                  to="/#privacy"
+                  to="#privacy"
                   className="text-slate-400 hover:text-white transition-colors duration-300"
                 >
                   Privacy
@@ -837,7 +839,7 @@ const Index = () => {
               </motion.div>
               <motion.div whileHover={{ scale: 1.1 }}>
                 <Link
-                  to="/#refund"
+                  to="#refund"
                   className="text-slate-400 hover:text-white transition-colors duration-300"
                 >
                   Refund
