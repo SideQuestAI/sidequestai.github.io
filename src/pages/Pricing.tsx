@@ -42,7 +42,7 @@ const Pricing = () => {
       if (planName === "Pro") url = appConfig.plans.pro.gumroad;
       if (planName === "Ultimate") url = appConfig.plans.ultimate.gumroad;
       if (url) {
-        window.open(url, "_blank", "noopener,noreferrer");
+        window.location.href = url;
       }
     }
   };
@@ -350,7 +350,24 @@ const Pricing = () => {
                     <MorphingButton
                       className="w-full"
                       variant={plan.popular ? "primary" : "secondary"}
-                      onClick={() => handlePlanSelect(plan.name, plan.price)}
+                      onClick={() => {
+                        if (plan.name === "Free") {
+                          showSuccess(
+                            "Welcome to SideQuestAI!",
+                            "Your free account is ready. Start creating your first course!",
+                          );
+                        } else {
+                          let url = "";
+                          if (plan.name === "Essential")
+                            url = appConfig.plans.essential.gumroad;
+                          if (plan.name === "Pro") url = appConfig.plans.pro.gumroad;
+                          if (plan.name === "Ultimate")
+                            url = appConfig.plans.ultimate.gumroad;
+                          if (url) {
+                            window.location.href = url;
+                          }
+                        }
+                      }}
                     >
                       {plan.buttonText}
                     </MorphingButton>
