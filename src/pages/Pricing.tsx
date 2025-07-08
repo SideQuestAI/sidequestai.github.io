@@ -24,6 +24,7 @@ import { Link } from "react-router-dom";
 import MorphingButton from "@/components/ui/morphing-button";
 import DynamicLogo from "@/components/ui/dynamic-logo";
 import { useToast } from "@/contexts/toast-context";
+import appConfig from "@/config/app.config";
 
 const Pricing = () => {
   const { showSuccess, showInfo } = useToast();
@@ -35,17 +36,14 @@ const Pricing = () => {
         "Your free account is ready. Start creating your first course!",
       );
     } else {
-      showInfo(
-        `${planName} Plan Selected`,
-        `Redirecting to checkout for ${price}/month...`,
-      );
-      // Simulate redirect to payment
-      setTimeout(() => {
-        showInfo(
-          "Payment Portal",
-          "This would normally redirect to Stripe/PayPal checkout",
-        );
-      }, 2000);
+      // Open Gumroad checkout for paid plans
+      let url = "";
+      if (planName === "Essential") url = appConfig.plans.essential.gumroad;
+      if (planName === "Pro") url = appConfig.plans.pro.gumroad;
+      if (planName === "Ultimate") url = appConfig.plans.ultimate.gumroad;
+      if (url) {
+        window.open(url, "_blank", "noopener,noreferrer");
+      }
     }
   };
 
@@ -356,53 +354,6 @@ const Pricing = () => {
                     >
                       {plan.buttonText}
                     </MorphingButton>
-
-                    {/* Gumroad Buy Buttons - open in new tab with React handler */}
-                    {plan.name === "Essential" && (
-                      <button
-                        className="buy-button w-full mt-2"
-                        onClick={() =>
-                          window.open(
-                            "https://sidequestai.gumroad.com/l/essential?wanted=true",
-                            "_blank",
-                            "noopener,noreferrer",
-                          )
-                        }
-                        type="button"
-                      >
-                        Buy Essential
-                      </button>
-                    )}
-                    {plan.name === "Pro" && (
-                      <button
-                        className="buy-button w-full mt-2"
-                        onClick={() =>
-                          window.open(
-                            "https://sidequestai.gumroad.com/l/pro?wanted=true",
-                            "_blank",
-                            "noopener,noreferrer",
-                          )
-                        }
-                        type="button"
-                      >
-                        Buy Pro
-                      </button>
-                    )}
-                    {plan.name === "Ultimate" && (
-                      <button
-                        className="buy-button w-full mt-2"
-                        onClick={() =>
-                          window.open(
-                            "https://sidequestai.gumroad.com/l/ultimate?wanted=true",
-                            "_blank",
-                            "noopener,noreferrer",
-                          )
-                        }
-                        type="button"
-                      >
-                        Go Ultimate
-                      </button>
-                    )}
                   </CardContent>
                 </Card>
               </motion.div>
