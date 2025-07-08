@@ -82,6 +82,19 @@ export const appConfig = {
     email: "sidequestaiofficial@gmail.com",
     phone: "",
   },
+
+  // Plan purchase links
+  plans: {
+    essential: {
+      gumroad: "https://sidequestai.gumroad.com/l/essential?wanted=true",
+    },
+    pro: {
+      gumroad: "https://sidequestai.gumroad.com/l/pro?wanted=true",
+    },
+    ultimate: {
+      gumroad: "https://sidequestai.gumroad.com/l/ultimate?wanted=true",
+    },
+  },
 };
 
 export default appConfig;
