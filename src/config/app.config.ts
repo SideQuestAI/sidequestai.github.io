@@ -34,7 +34,7 @@ export const appConfig = {
       version: "1.0.0",
     },
     android: {
-      link: "https://github.com/SideQuestAI/sidequestai.github.io/blob/main/SideQuestAI.android.apk", // "https://play.google.com/store/apps/details?id=com.sidequestai" (page redirect)
+      link: "https://raw.githubusercontent.com/SideQuestAI/sidequestai.github.io/main/SideQuestAI.android.apk", // "https://play.google.com/store/apps/details?id=com.sidequestai" (page redirect)
       //        or "https://github.com/user/repo/releases/download/v1.0.0/app.apk" (direct download)
       version: "v0.5",
     },
@@ -49,7 +49,7 @@ export const appConfig = {
       version: "1.0.0",
     },
     linux: {
-      link: "blob:https://github.com/2fbacb63-f61e-454d-a680-010eb0bd1a27", // "https://github.com/username/sidequestai/releases/download/v1.0.0/SideQuestAI.AppImage" (direct download)
+      link: "https://raw.githubusercontent.com/SideQuestAI/sidequestai.github.io/main/sidequestai-1.0.0-x86_64.AppImage", // "https://github.com/username/sidequestai/releases/download/v1.0.0/SideQuestAI.AppImage" (direct download)
       //        or "https://github.com/user/repo/releases/download/v1.0.0/sidequestai.deb" (direct download)
       version: "v0.5",
     },
