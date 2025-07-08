@@ -357,37 +357,51 @@ const Pricing = () => {
                       {plan.buttonText}
                     </MorphingButton>
 
-                    {/* Gumroad Buy Buttons */}
+                    {/* Gumroad Buy Buttons - open in new tab with React handler */}
                     {plan.name === "Essential" && (
-                      <a
-                        href="https://sidequestai.gumroad.com/l/essential?wanted=true"
-                        target="_blank"
-                        rel="noopener noreferrer"
+                      <button
+                        className="buy-button w-full mt-2"
+                        onClick={() =>
+                          window.open(
+                            "https://sidequestai.gumroad.com/l/essential?wanted=true",
+                            "_blank",
+                            "noopener,noreferrer",
+                          )
+                        }
+                        type="button"
                       >
-                        <button className="buy-button w-full mt-2">
-                          Buy Essential
-                        </button>
-                      </a>
+                        Buy Essential
+                      </button>
                     )}
                     {plan.name === "Pro" && (
-                      <a
-                        href="https://sidequestai.gumroad.com/l/pro?wanted=true"
-                        target="_blank"
-                        rel="noopener noreferrer"
+                      <button
+                        className="buy-button w-full mt-2"
+                        onClick={() =>
+                          window.open(
+                            "https://sidequestai.gumroad.com/l/pro?wanted=true",
+                            "_blank",
+                            "noopener,noreferrer",
+                          )
+                        }
+                        type="button"
                       >
-                        <button className="buy-button w-full mt-2">Buy Pro</button>
-                      </a>
+                        Buy Pro
+                      </button>
                     )}
                     {plan.name === "Ultimate" && (
-                      <a
-                        href="https://sidequestai.gumroad.com/l/ultimate?wanted=true"
-                        target="_blank"
-                        rel="noopener noreferrer"
+                      <button
+                        className="buy-button w-full mt-2"
+                        onClick={() =>
+                          window.open(
+                            "https://sidequestai.gumroad.com/l/ultimate?wanted=true",
+                            "_blank",
+                            "noopener,noreferrer",
+                          )
+                        }
+                        type="button"
                       >
-                        <button className="buy-button w-full mt-2">
-                          Go Ultimate
-                        </button>
-                      </a>
+                        Go Ultimate
+                      </button>
                     )}
                   </CardContent>
                 </Card>
