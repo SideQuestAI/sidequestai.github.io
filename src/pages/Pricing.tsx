@@ -356,6 +356,39 @@ const Pricing = () => {
                     >
                       {plan.buttonText}
                     </MorphingButton>
+
+                    {/* Gumroad Buy Buttons */}
+                    {plan.name === "Essential" && (
+                      <a
+                        href="https://sidequestai.gumroad.com/l/essential?wanted=true"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <button className="buy-button w-full mt-2">
+                          Buy Essential
+                        </button>
+                      </a>
+                    )}
+                    {plan.name === "Pro" && (
+                      <a
+                        href="https://sidequestai.gumroad.com/l/pro?wanted=true"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <button className="buy-button w-full mt-2">Buy Pro</button>
+                      </a>
+                    )}
+                    {plan.name === "Ultimate" && (
+                      <a
+                        href="https://sidequestai.gumroad.com/l/ultimate?wanted=true"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <button className="buy-button w-full mt-2">
+                          Go Ultimate
+                        </button>
+                      </a>
+                    )}
                   </CardContent>
                 </Card>
               </motion.div>
@@ -409,41 +442,68 @@ const Pricing = () => {
                 question: "How many tokens does each action use?",
                 answer: (
                   <details>
-                    <summary className="cursor-pointer text-blue-400 hover:underline mb-2">Show average token costs for common actions</summary>
+                    <summary className="cursor-pointer text-blue-400 hover:underline mb-2">
+                      Show average token costs for common actions
+                    </summary>
                     <div className="overflow-x-auto mt-2">
                       <table className="min-w-full text-left text-slate-300 border-collapse text-sm">
                         <thead>
                           <tr>
-                            <th className="py-2 px-4 border-b border-slate-700 font-semibold">Action</th>
-                            <th className="py-2 px-4 border-b border-slate-700 font-semibold">Avg. Tokens Used</th>
+                            <th className="py-2 px-4 border-b border-slate-700 font-semibold">
+                              Action
+                            </th>
+                            <th className="py-2 px-4 border-b border-slate-700 font-semibold">
+                              Avg. Tokens Used
+                            </th>
                           </tr>
                         </thead>
                         <tbody>
                           <tr>
-                            <td className="py-2 px-4 border-b border-slate-800">Generate a full course</td>
-                            <td className="py-2 px-4 border-b border-slate-800">2,500–5,000</td>
+                            <td className="py-2 px-4 border-b border-slate-800">
+                              Generate a full course
+                            </td>
+                            <td className="py-2 px-4 border-b border-slate-800">
+                              2,500–5,000
+                            </td>
                           </tr>
                           <tr>
-                            <td className="py-2 px-4 border-b border-slate-800">Generate a lesson/module</td>
-                            <td className="py-2 px-4 border-b border-slate-800">500–1,000</td>
+                            <td className="py-2 px-4 border-b border-slate-800">
+                              Generate a lesson/module
+                            </td>
+                            <td className="py-2 px-4 border-b border-slate-800">
+                              500–1,000
+                            </td>
                           </tr>
                           <tr>
-                            <td className="py-2 px-4 border-b border-slate-800">Quiz or assessment</td>
-                            <td className="py-2 px-4 border-b border-slate-800">200–500</td>
+                            <td className="py-2 px-4 border-b border-slate-800">
+                              Quiz or assessment
+                            </td>
+                            <td className="py-2 px-4 border-b border-slate-800">
+                              200–500
+                            </td>
                           </tr>
                           <tr>
-                            <td className="py-2 px-4 border-b border-slate-800">Course summary/outline</td>
-                            <td className="py-2 px-4 border-b border-slate-800">100–300</td>
+                            <td className="py-2 px-4 border-b border-slate-800">
+                              Course summary/outline
+                            </td>
+                            <td className="py-2 px-4 border-b border-slate-800">
+                              100–300
+                            </td>
                           </tr>
                           <tr>
-                            <td className="py-2 px-4 border-b border-slate-800">Regenerate content</td>
-                            <td className="py-2 px-4 border-b border-slate-800">Varies (usually 50–500)</td>
+                            <td className="py-2 px-4 border-b border-slate-800">
+                              Regenerate content
+                            </td>
+                            <td className="py-2 px-4 border-b border-slate-800">
+                              Varies (usually 50–500)
+                            </td>
                           </tr>
                         </tbody>
                       </table>
                     </div>
                     <p className="text-xs text-slate-500 mt-2">
-                      These are average values. You can track your exact token usage in your dashboard.
+                      These are average values. You can track your exact token usage
+                      in your dashboard.
                     </p>
                   </details>
                 ),
