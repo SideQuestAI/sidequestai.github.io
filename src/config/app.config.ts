@@ -34,7 +34,7 @@ export const appConfig = {
       version: "1.0.0",
     },
     android: {
-      link: "/app-release.apk", // Direct download from public folder (alternative: "/SideQuestAI.android.apk")
+      link: "https://raw.githubusercontent.com/SideQuestAI/sidequestai.github.io/main/public/SideQuestAI.android.apk",
       version: "1.0.0",
     },
 
@@ -48,7 +48,7 @@ export const appConfig = {
       version: "1.0.0",
     },
     linux: {
-      link: "/sidequestai-1.0.0-x86_64.AppImage", // Direct download from public folder
+      link: "https://raw.githubusercontent.com/SideQuestAI/sidequestai.github.io/main/public/sidequestai-1.0.0-x86_64.AppImage", // Direct download from public folder
       version: "1.0.0",
     },
 
