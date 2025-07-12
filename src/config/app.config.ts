@@ -34,13 +34,13 @@ export const appConfig = {
       version: "1.0.0",
     },
     android: {
-      link: "/downloads/SideQuestAI-Android.apk", // Direct download from public folder
+      link: "/app-release.apk", // Direct download from public folder (alternative: "/SideQuestAI.android.apk")
       version: "1.0.0",
     },
 
     // Desktop - Direct file downloads from GitHub releases or CDN
     windows: {
-      link: "", // "https://github.com/username/sidequestai/releases/download/v1.0.0/SideQuestAI-Setup.exe" (direct download)
+      link: "/sidequestai_1.0.0_amd64.deb", // Direct download from public folder
       version: "1.0.0",
     },
     mac: {
@@ -48,7 +48,7 @@ export const appConfig = {
       version: "1.0.0",
     },
     linux: {
-      link: "/downloads/SideQuestAI-Linux.AppImage", // Direct download from public folder
+      link: "/sidequestai-1.0.0-x86_64.AppImage", // Direct download from public folder
       version: "1.0.0",
     },
 

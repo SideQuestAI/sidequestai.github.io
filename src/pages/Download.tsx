@@ -22,8 +22,6 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useRef, useEffect, useState } from "react";
-import { appConfig } from "@/config/app.config";
-import { getDownloadInfo, handleDownloadAction, getDownloadButtonText, getDownloadIcon } from "@/lib/download-utils";
 
 const DownloadPage = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -59,49 +57,40 @@ const DownloadPage = () => {
 
   const downloads = [
     {
-      platform: "Windows" as const,
+      platform: "Windows",
       icon: Monitor,
       description: "Desktop app for Windows 10+",
-      configKey: "windows" as const,
+      url: "https://github.com/SideQuestAI/web/releases/download/v1.0.0/SideQuestAI-Windows.exe",
       size: "125 MB",
       recommended: platform === "windows",
       tag: "Most Popular",
     },
     {
-      platform: "macOS" as const,
+      platform: "macOS",
       icon: Monitor,
       description: "Desktop app for macOS 11+",
-      configKey: "mac" as const,
+      url: "https://github.com/SideQuestAI/web/releases/download/v1.0.0/SideQuestAI-macOS.dmg",
       size: "130 MB",
       recommended: platform === "mac",
       tag: "Optimized",
     },
     {
-      platform: "Android" as const,
+      platform: "Android",
       icon: Smartphone,
       description: "Mobile app for Android 8+",
-      configKey: "android" as const,
+      url: "https://play.google.com/store/apps/details?id=com.sidequestai.app",
       size: "45 MB",
       recommended: platform === "android",
       tag: "Mobile",
     },
     {
-      platform: "iOS" as const,
+      platform: "iOS",
       icon: Tablet,
       description: "Mobile app for iOS 14+",
-      configKey: "ios" as const,
+      url: "https://apps.apple.com/app/sidequestai/id123456789",
       size: "50 MB",
       recommended: platform === "ios",
       tag: "Mobile",
-    },
-    {
-      platform: "Linux" as const,
-      icon: Monitor,
-      description: "Desktop app for Linux",
-      configKey: "linux" as const,
-      size: "140 MB",
-      recommended: platform === "linux",
-      tag: "Open Source",
     },
   ];
 
@@ -128,10 +117,11 @@ const DownloadPage = () => {
     },
   ];
 
-  const handleDownload = (configKey: keyof typeof appConfig.downloads) => {
-    const downloadInfo = getDownloadInfo(configKey);
-    if (downloadInfo) {
-      handleDownloadAction(downloadInfo, () => {});
+  const handleDownload = (url: string, platformName: string) => {
+    if (url.includes("github.com")) {
+      window.open(url, "_blank");
+    } else {
+      window.open(url, "_blank");
     }
   };
 
@@ -351,14 +341,12 @@ const DownloadPage = () => {
                             ? "bg-white text-black hover:bg-gray-200"
                             : "bg-gray-800 hover:bg-gray-700 text-white"
                         }`}
-                        onClick={() => handleDownload(download.configKey)}
-                        disabled={!appConfig.downloads[download.configKey].link}
+                        onClick={() =>
+                          handleDownload(download.url, download.platform)
+                        }
                       >
                         <Download className="w-4 h-4 mr-2" />
-                        {appConfig.downloads[download.configKey].link 
-                          ? getDownloadButtonText(getDownloadInfo(download.configKey), download.platform)
-                          : "Coming Soon"
-                        }
+                        Download
                       </Button>
                     </motion.div>
                   </CardContent>
