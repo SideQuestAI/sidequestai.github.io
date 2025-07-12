@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useRef, useEffect, useState } from "react";
+import { useAppRedirect } from "@/utils/app-redirect";
 
 const DownloadPage = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -37,6 +38,7 @@ const DownloadPage = () => {
   const [userAgent, setUserAgent] = useState("");
   const [isMobile, setIsMobile] = useState(false);
   const shouldReduceMotion = useReducedMotion();
+  const { redirectToApp } = useAppRedirect();
 
   useEffect(() => {
     setUserAgent(navigator.userAgent);
@@ -117,6 +119,20 @@ const DownloadPage = () => {
   ];
 
   const handleDownload = (url: string, platformName: string) => {
+    // For Android, try to redirect to app first
+    if (platformName.toLowerCase() === "android") {
+      const redirected = redirectToApp("/download", {
+        fallbackUrl: url,
+        timeout: 1500,
+        showFallbackButton: true
+      });
+      
+      if (redirected) {
+        return; // App redirect was attempted
+      }
+    }
+    
+    // Fallback to direct download
     if (url.includes("github.com")) {
       window.open(url, "_blank");
     } else {

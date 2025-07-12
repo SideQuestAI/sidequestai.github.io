@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ToastProvider } from "@/contexts/toast-context";
+import { AppRedirectBanner } from "@/components/ui/app-redirect-banner";
 import Index from "./pages/Index";
 import Download from "./pages/Download";
 import Pricing from "./pages/Pricing";
@@ -30,6 +31,7 @@ const App: React.FC = () => {
         <ToastProvider>
           <Toaster />
           <Sonner />
+          <AppRedirectBanner showOnMobile={true} autoRedirect={false} delay={2000} />
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Index />} />

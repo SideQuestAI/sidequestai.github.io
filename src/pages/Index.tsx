@@ -29,6 +29,7 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useRef, useEffect, useState, useMemo } from "react";
+import { useAppRedirect } from "@/utils/app-redirect";
 
 const Index = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -40,6 +41,7 @@ const Index = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const shouldReduceMotion = useReducedMotion();
+  const { redirectToApp } = useAppRedirect();
 
   const { scrollYProgress } = useScroll();
   const yParallax = useTransform(scrollYProgress, [0, 1], [0, -100]);
@@ -124,6 +126,22 @@ const Index = () => {
     ],
     [],
   );
+
+  const handleDownloadClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    
+    // Try to redirect to app first
+    const redirected = redirectToApp("/download", {
+      fallbackUrl: "/download",
+      timeout: 1500,
+      showFallbackButton: true
+    });
+    
+    // If not on mobile or redirect failed, go to download page
+    if (!redirected) {
+      window.location.href = "/download";
+    }
+  };
 
   // Optimized animation variants - keeping essential animations
   const containerVariants = {
@@ -751,13 +769,11 @@ const Index = () => {
               >
                 <Button
                   size="lg"
-                  asChild
+                  onClick={handleDownloadClick}
                   className="w-full sm:w-auto bg-white text-black hover:bg-gray-200"
                 >
-                  <Link to="/download">
-                    <Download className="w-5 h-5 mr-2" />
-                    Download SideQuestAI
-                  </Link>
+                  <Download className="w-5 h-5 mr-2" />
+                  Download SideQuestAI
                 </Button>
               </motion.div>
               <motion.div
@@ -821,12 +837,21 @@ const Index = () => {
                     key={item}
                     whileHover={shouldReduceMotion ? {} : { x: 5 }}
                   >
-                    <Link
-                      to={`/${item.toLowerCase()}`}
-                      className="block text-gray-400 hover:text-white transition-colors"
-                    >
-                      {item}
-                    </Link>
+                    {item === "Download" ? (
+                      <button
+                        onClick={handleDownloadClick}
+                        className="block text-gray-400 hover:text-white transition-colors text-left w-full"
+                      >
+                        {item}
+                      </button>
+                    ) : (
+                      <Link
+                        to={`/${item.toLowerCase()}`}
+                        className="block text-gray-400 hover:text-white transition-colors"
+                      >
+                        {item}
+                      </Link>
+                    )}
                   </motion.div>
                 ))}
               </div>
