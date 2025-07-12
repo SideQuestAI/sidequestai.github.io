@@ -1,4 +1,11 @@
-import { motion, useScroll, useTransform, useInView } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useInView,
+  useReducedMotion,
+  AnimatePresence,
+} from "framer-motion";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -7,7 +14,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import {
   ArrowRight,
   Brain,
@@ -17,640 +23,624 @@ import {
   Zap,
   Users,
   TrendingUp,
-  Sparkles,
-  Bot,
-  Code2,
-  Layers3,
   Play,
-  ExternalLink,
+  ChevronRight,
+  Check,
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useRef, useState } from "react";
-import Particles from "@/components/ui/particles";
-import FloatingShapes from "@/components/ui/floating-shapes";
-import MorphingButton from "@/components/ui/morphing-button";
-import AnimatedCounter from "@/components/ui/animated-counter";
-import DynamicLogo from "@/components/ui/dynamic-logo";
-import { FeatureShowcase, features } from "@/components/ui/feature-showcase";
-import { useToast } from "@/contexts/toast-context";
+import { useRef, useEffect, useState, useMemo } from "react";
 
 const Index = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const featuresRef = useRef<HTMLDivElement>(null);
   const statsRef = useRef<HTMLDivElement>(null);
+  const benefitsRef = useRef<HTMLDivElement>(null);
+  const ctaRef = useRef<HTMLDivElement>(null);
 
-  const [selectedFeature, setSelectedFeature] = useState<any>(null);
-  const [isFeatureModalOpen, setIsFeatureModalOpen] = useState(false);
-  const { showSuccess, showInfo } = useToast();
+  const [isMobile, setIsMobile] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   const { scrollYProgress } = useScroll();
-  const yParallax = useTransform(scrollYProgress, [0, 1], [0, -50]);
-  const scaleParallax = useTransform(scrollYProgress, [0, 0.5], [1, 1.2]);
+  const yParallax = useTransform(scrollYProgress, [0, 1], [0, -100]);
+  const scaleParallax = useTransform(scrollYProgress, [0, 0.5], [1, 1.02]);
 
-  const heroInView = useInView(heroRef, { once: true });
-  const featuresInView = useInView(featuresRef, { once: true });
-  const statsInView = useInView(statsRef, { once: true });
+  const heroInView = useInView(heroRef, { once: true, threshold: 0.1 });
+  const featuresInView = useInView(featuresRef, { once: true, threshold: 0.1 });
+  const statsInView = useInView(statsRef, { once: true, threshold: 0.3 });
+  const benefitsInView = useInView(benefitsRef, { once: true, threshold: 0.1 });
+  const ctaInView = useInView(ctaRef, { once: true, threshold: 0.3 });
 
-  const handleFeatureClick = (featureKey: keyof typeof features) => {
-    setSelectedFeature(features[featureKey]);
-    setIsFeatureModalOpen(true);
-    showInfo("Feature Details", "Loading feature showcase...");
-  };
+  useEffect(() => {
+    setIsLoaded(true);
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
-  const handleStartJourney = () => {
-    showSuccess(
-      "Ready to Start!",
-      "Redirecting to download the SideQuestAI app...",
-    );
-    setTimeout(() => {
-      window.location.hash = "#download";
-    }, 1500);
-  };
+  const stats = useMemo(
+    () => [
+      { label: "Active Users", value: "10,000+", icon: Users },
+      { label: "Courses Created", value: "25,000+", icon: Target },
+      { label: "Success Rate", value: "92%", icon: TrendingUp },
+      { label: "Countries", value: "150+", icon: Brain },
+    ],
+    [],
+  );
 
-  const handleLearnMore = () => {
-    showInfo("Learn More", "Scrolling to features section...");
-    document.getElementById("features")?.scrollIntoView({ behavior: "smooth" });
-  };
+  const features = useMemo(
+    () => [
+      {
+        icon: Brain,
+        title: "AI-Powered Learning",
+        description:
+          "Get personalized course recommendations based on your interests and goals.",
+      },
+      {
+        icon: Target,
+        title: "Goal-Oriented Milestones",
+        description:
+          "Break down complex side hustles into achievable daily tasks.",
+      },
+      {
+        icon: Rocket,
+        title: "Launch Faster",
+        description:
+          "From idea to income in weeks, not months, with our proven frameworks.",
+      },
+      {
+        icon: Zap,
+        title: "Smart Automation",
+        description:
+          "Automate repetitive tasks and focus on what matters most.",
+      },
+      {
+        icon: Users,
+        title: "Community Support",
+        description:
+          "Connect with like-minded entrepreneurs on similar journeys.",
+      },
+      {
+        icon: TrendingUp,
+        title: "Track Progress",
+        description:
+          "Monitor your growth with detailed analytics and insights.",
+      },
+    ],
+    [],
+  );
 
+  const benefits = useMemo(
+    () => [
+      "Step-by-step guided courses",
+      "AI-generated milestones",
+      "Progress tracking",
+      "Community access",
+      "24/7 support",
+      "Mobile app included",
+    ],
+    [],
+  );
+
+  // Optimized animation variants - keeping essential animations
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.1,
+        staggerChildren: shouldReduceMotion ? 0 : isMobile ? 0.1 : 0.15,
+        delayChildren: shouldReduceMotion ? 0 : 0.2,
       },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : isMobile ? 20 : 30 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.8,
+        duration: shouldReduceMotion ? 0.2 : isMobile ? 0.4 : 0.6,
         ease: [0.25, 0.46, 0.45, 0.94],
       },
     },
   };
 
-  const floatVariants = {
-    animate: {
-      y: [0, -20, 0],
-      transition:
-        {
-          duration: 4,
-          repeat: Infinity,
-          ease: "easeInOut",
-        },
+  const cardVariants = {
+    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : isMobile ? 30 : 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: shouldReduceMotion ? 0.2 : isMobile ? 0.5 : 0.8,
+        ease: [0.25, 0.46, 0.45, 0.94],
+      },
     },
+    hover: shouldReduceMotion
+      ? {}
+      : {
+          scale: isMobile ? 1.01 : 1.02,
+          y: isMobile ? -2 : -5,
+          transition: {
+            duration: 0.2,
+            ease: "easeOut",
+          },
+        },
+  };
+
+  // Planter rising animation elements
+  const PlanterElements = () => {
+    if (shouldReduceMotion || isMobile) return null;
+
+    return (
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        {/* Rising geometric shapes */}
+        {[...Array(12)].map((_, i) => (
+          <motion.div
+            key={`planter-${i}`}
+            className="absolute"
+            style={{
+              left: `${5 + i * 8}%`,
+              bottom: "-20px",
+              width: `${20 + i * 2}px`,
+              height: `${40 + i * 10}px`,
+            }}
+            initial={{ y: 100, opacity: 0, scaleY: 0 }}
+            animate={{
+              y: [-20, -40, -20],
+              opacity: [0, 0.6, 0.4, 0.6],
+              scaleY: [0, 1, 1.1, 1],
+            }}
+            transition={{
+              duration: 8 + i * 0.5,
+              delay: i * 0.3,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          >
+            <div
+              className="w-full h-full bg-gradient-to-t from-white/10 to-white/5 rounded-t-full"
+              style={{
+                transformOrigin: "bottom",
+              }}
+            />
+            {/* Branches */}
+            {i % 3 === 0 && (
+              <>
+                <motion.div
+                  className="absolute top-1/3 -left-2 w-4 h-1 bg-white/5 rounded-full"
+                  animate={{
+                    rotate: [0, 10, -10, 0],
+                    scaleX: [0.8, 1.2, 0.8],
+                  }}
+                  transition={{
+                    duration: 4,
+                    delay: i * 0.2,
+                    repeat: Infinity,
+                  }}
+                />
+                <motion.div
+                  className="absolute top-1/2 -right-2 w-4 h-1 bg-white/5 rounded-full"
+                  animate={{
+                    rotate: [0, -10, 10, 0],
+                    scaleX: [0.8, 1.2, 0.8],
+                  }}
+                  transition={{
+                    duration: 4,
+                    delay: i * 0.2 + 1,
+                    repeat: Infinity,
+                  }}
+                />
+              </>
+            )}
+          </motion.div>
+        ))}
+      </div>
+    );
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground overflow-hidden">
-      {/* Subtle Background Effects */}
-      <div className="fixed inset-0 z-0">
-        {/* Dark base gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950" />
+    <div className="min-h-screen bg-black text-white overflow-hidden">
+      {/* Optimized Background Grid */}
+      <motion.div
+        className="fixed inset-0 pointer-events-none"
+        style={{
+          backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255,255,255,0.08) 1px, transparent 0)`,
+          backgroundSize: isMobile ? "40px 40px" : "50px 50px",
+          willChange: shouldReduceMotion ? "auto" : "background-position",
+        }}
+        animate={
+          shouldReduceMotion
+            ? {}
+            : {
+                backgroundPosition: ["0px 0px", "50px 50px"],
+              }
+        }
+        transition={{
+          duration: 30,
+          repeat: Infinity,
+          ease: "linear",
+        }}
+      />
 
-        {/* Random shooting lights */}
-        <div className="absolute inset-0">
-          {Array.from({ length: 12 }, (_, i) => (
+      {/* Planter Rising Background */}
+      <AnimatePresence>{isLoaded && <PlanterElements />}</AnimatePresence>
+
+      {/* Subtle Floating Elements */}
+      {!shouldReduceMotion && (
+        <div className="fixed inset-0 pointer-events-none">
+          {[...Array(isMobile ? 3 : 6)].map((_, i) => (
             <motion.div
               key={i}
-              className="absolute w-0.5 h-16 bg-gradient-to-t from-transparent via-blue-400/20 to-transparent"
+              className={`absolute w-${isMobile ? 12 + i * 3 : 16 + i * 4} h-${
+                isMobile ? 12 + i * 3 : 16 + i * 4
+              } bg-white/${Math.max(2, 5 - i)} rounded-full blur-xl`}
               style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
+                left: `${15 + i * (isMobile ? 25 : 15)}%`,
+                top: `${20 + i * (isMobile ? 15 : 12)}%`,
+                willChange: "transform",
               }}
               animate={{
-                y: ["-100vh", "100vh"],
-                opacity: [0, 1, 0],
+                y: [-8, 8, -8],
+                x: [-4, 4, -4],
+                scale: [1, 1.03, 1],
               }}
               transition={{
-                duration: Math.random() * 4 + 3,
+                duration: 8 + i * 2,
                 repeat: Infinity,
-                delay: Math.random() * 8,
-                ease: "linear",
+                delay: i * 1.2,
+                ease: "easeInOut",
               }}
             />
           ))}
         </div>
-
-        {/* Subtle particles */}
-        <Particles count={30} />
-      </div>
+      )}
 
       {/* Navigation */}
       <motion.nav
-        className="sticky top-0 z-50 watery-nav"
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{
-          duration: 1.2,
-          type: "spring",
-          stiffness: 100,
-          damping: 20,
-        }}
-        whileHover={{
-          backgroundColor: "rgba(255, 255, 255, 0.08)",
-          transition: { duration: 0.3 },
-        }}
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="sticky top-0 z-50 border-b border-gray-800/30 bg-black/80 backdrop-blur-xl"
+        style={{ willChange: "transform" }}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex h-16 items-center justify-between">
             <motion.div
-              whileHover={{ scale: 1.05 }}
-              transition={{ type: "spring", stiffness: 400, damping: 10 }}
+              whileHover={shouldReduceMotion ? {} : { scale: 1.05 }}
+              className="flex items-center space-x-2"
             >
-              <DynamicLogo animate={true} />
+              <motion.div
+                animate={
+                  shouldReduceMotion
+                    ? {}
+                    : {
+                        textShadow: [
+                          "0 0 20px rgba(255,255,255,0.5)",
+                          "0 0 30px rgba(255,255,255,0.7)",
+                          "0 0 20px rgba(255,255,255,0.5)",
+                        ],
+                      }
+                }
+                transition={{ duration: 3, repeat: Infinity }}
+                className="text-xl font-bold text-white"
+              >
+                SideQuestAI
+              </motion.div>
             </motion.div>
 
-            <div className="flex items-center space-x-6">
-              <motion.div
-                whileHover={{
-                  scale: 1.1,
-                  y: -2,
-                  transition: { type: "spring", stiffness: 400, damping: 10 },
-                }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Link
-                  to="/download"
-                  className="smooth-text text-slate-300 hover:text-white transition-all duration-500 font-medium relative group"
+            <div className="hidden md:flex items-center space-x-8">
+              {["Pricing", "Download"].map((item, i) => (
+                <motion.div
+                  key={item}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.2 + i * 0.1 }}
+                  whileHover={
+                    shouldReduceMotion
+                      ? {}
+                      : {
+                          scale: 1.05,
+                          textShadow: "0 0 8px rgba(255,255,255,0.8)",
+                        }
+                  }
                 >
-                  Download
-                  <motion.span
-                    className="absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 liquid-gradient"
-                    initial={{ width: 0 }}
-                    whileHover={{ width: "100%" }}
-                    transition={{ duration: 0.4, ease: "easeInOut" }}
-                  />
-                </Link>
-              </motion.div>
+                  <Link
+                    to={`/${item.toLowerCase()}`}
+                    className="text-gray-300 hover:text-white transition-colors"
+                  >
+                    {item}
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
 
+            <div className="flex items-center space-x-3">
               <motion.div
-                whileHover={{
-                  scale: 1.1,
-                  y: -2,
-                  transition: { type: "spring", stiffness: 400, damping: 10 },
-                }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={shouldReduceMotion ? {} : { scale: 1.05 }}
+                whileTap={shouldReduceMotion ? {} : { scale: 0.95 }}
               >
-                <Link
-                  to="/pricing"
-                  className="smooth-text text-slate-300 hover:text-white transition-all duration-500 font-medium relative group"
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  asChild
+                  className="hidden sm:inline-flex hover:bg-white/10"
                 >
-                  Pricing
-                  <motion.span
-                    className="absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 liquid-gradient"
-                    initial={{ width: 0 }}
-                    whileHover={{ width: "100%" }}
-                    transition={{ duration: 0.4, ease: "easeInOut" }}
-                  />
-                </Link>
+                  <Link to="/pricing">Try Free</Link>
+                </Button>
               </motion.div>
-
-              <Link to="/pricing#free">
-                <MorphingButton>
-                  Get Started
-                  <ArrowRight className="w-4 h-4" />
-                </MorphingButton>
-              </Link>
+              <motion.div
+                whileHover={
+                  shouldReduceMotion
+                    ? {}
+                    : {
+                        scale: 1.05,
+                        boxShadow: "0 0 20px rgba(255,255,255,0.3)",
+                      }
+                }
+                whileTap={shouldReduceMotion ? {} : { scale: 0.95 }}
+              >
+                <Button
+                  size="sm"
+                  asChild
+                  className="bg-white text-black hover:bg-gray-200"
+                >
+                  <Link to="/download">
+                    <Download className="w-4 h-4 mr-2" />
+                    Get App
+                  </Link>
+                </Button>
+              </motion.div>
             </div>
           </div>
         </div>
       </motion.nav>
 
       {/* Hero Section */}
-      <section
-        ref={heroRef}
-        className="relative py-20 lg:py-32 px-4 sm:px-6 lg:px-8 z-10"
-      >
+      <section ref={heroRef} className="py-12 sm:py-20 lg:py-32 relative">
         <motion.div
-          className="max-w-6xl mx-auto"
-          variants={containerVariants}
-          initial="hidden"
-          animate={heroInView ? "visible" : "hidden"}
+          style={{ y: shouldReduceMotion ? 0 : yParallax }}
+          className="container mx-auto px-4 sm:px-6 lg:px-8"
         >
-          <div className="text-center mb-16">
-            <motion.div
-              variants={itemVariants}
-              className="inline-flex items-center space-x-2 glass px-4 py-2 rounded-full text-sm font-medium mb-8 glow"
-            >
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-              >
-                <Brain className="w-4 h-4 text-blue-400" />
-              </motion.div>
-              <span className="text-white">
-                AI-Powered Side Hustle Education
-              </span>
-            </motion.div>
-
-            <motion.h1
-              variants={itemVariants}
-              className="text-6xl sm:text-7xl lg:text-8xl font-display font-bold mb-8"
-              initial={{ opacity: 0, y: 50, scale: 0.9 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{
-                duration: 1,
-                type: "spring",
-                stiffness: 100,
-                damping: 15,
-              }}
-            >
-              <motion.span
-                whileHover={{
-                  scale: 1.02,
-                  transition: { type: "spring", stiffness: 300 },
-                }}
-              >
-                Your{" "}
-              </motion.span>
-              <motion.span
-                className="text-gradient inline-block liquid-gradient"
-                animate={{
-                  backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-                }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                whileHover={{
-                  scale: 1.05,
-                  rotateY: 5,
-                  transition: {
-                    type: "spring",
-                    stiffness: 300,
-                    damping: 20,
-                  },
-                }}
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate={heroInView ? "visible" : "hidden"}
+            className="max-w-4xl mx-auto text-center"
+          >
+            <motion.div variants={itemVariants} className="mb-8">
+              <motion.h1
+                className="text-4xl sm:text-5xl lg:text-7xl font-bold mb-6 leading-tight"
+                animate={
+                  shouldReduceMotion
+                    ? {}
+                    : {
+                        backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+                      }
+                }
+                transition={{ duration: 8, repeat: Infinity }}
                 style={{
-                  backgroundSize: "300% 300%",
+                  background:
+                    "linear-gradient(45deg, #fff, #888, #fff, #ccc, #fff)",
+                  backgroundSize: "400% 400%",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
                 }}
               >
-                AI Mentor
-              </motion.span>
-              <br />
-              <motion.span
-                whileHover={{
-                  scale: 1.02,
-                  transition: { type: "spring", stiffness: 300 },
-                }}
-              >
-                for Side Hustles
-              </motion.span>
-            </motion.h1>
+                Turn Your Ideas Into
+                <motion.span
+                  className="block"
+                  animate={
+                    shouldReduceMotion
+                      ? {}
+                      : {
+                          textShadow: [
+                            "0 0 20px rgba(255,255,255,0.8)",
+                            "0 0 40px rgba(255,255,255,1)",
+                            "0 0 20px rgba(255,255,255,0.8)",
+                          ],
+                        }
+                  }
+                  transition={{ duration: 3, repeat: Infinity }}
+                >
+                  Profitable Side Hustles
+                </motion.span>
+              </motion.h1>
+            </motion.div>
 
             <motion.p
               variants={itemVariants}
-              className="text-xl lg:text-2xl text-slate-300 mb-12 max-w-3xl mx-auto leading-relaxed"
+              className="text-lg sm:text-xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed"
             >
-              Tell us your side hustle idea, and our AI will generate a complete
-              step-by-step course with milestones to turn your vision into
-              reality.
+              AI-powered platform that creates step-by-step courses and
+              milestones to help you build successful side businesses.
             </motion.p>
 
             <motion.div
               variants={itemVariants}
               className="flex flex-col sm:flex-row gap-4 justify-center"
             >
-              <MorphingButton size="lg" onClick={handleStartJourney}>
-                <Download className="w-5 h-5" />
-                Get the App
-              </MorphingButton>
-
-              <Link to="/pricing#free">
-                <MorphingButton variant="secondary" size="lg">
-                  <Zap className="w-5 h-5" />
-                  Try Free
-                </MorphingButton>
-              </Link>
-            </motion.div>
-          </div>
-
-          {/* Interactive Demo Card */}
-          <motion.div variants={itemVariants} className="max-w-4xl mx-auto">
-            <motion.div
-              className="watery-card p-8 rounded-2xl border-2 border-white/20 glow cursor-pointer smooth-entrance"
-              whileHover={{
-                scale: 1.03,
-                y: -8,
-                rotateX: 5,
-                transition: {
-                  type: "spring",
-                  stiffness: 300,
-                  damping: 20,
-                },
-              }}
-              whileTap={{ scale: 0.98 }}
-              onClick={() => handleFeatureClick("aiGeneration")}
-            >
-              <div className="text-center mb-6">
-                <motion.div
-                  animate={{ scale: [1, 1.05, 1] }}
-                  transition={{ duration: 3, repeat: Infinity }}
-                >
-                  <Badge className="bg-green-500/20 text-green-400 border-green-500/30 glow">
-                    <Play className="w-3 h-3 mr-1" />
-                    Interactive Demo
-                  </Badge>
-                </motion.div>
-              </div>
-
-              <div className="glass rounded-xl p-6 mb-6 border border-white/10">
-                <motion.p
-                  className="text-lg text-slate-300 mb-4"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 1 }}
-                >
-                  <span className="font-medium text-blue-400">You:</span> "I
-                  want to start a social media marketing agency"
-                </motion.p>
-
-                <div className="space-y-3 text-left">
-                  {[
-                    "Build a professional portfolio with 3 sample campaigns",
-                    "Master Facebook Ads Manager and Google Ads fundamentals",
-                    "Land your first 3 clients using cold outreach strategies",
-                  ].map((item, index) => (
-                    <motion.div
-                      key={index}
-                      className="flex items-start space-x-3"
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 1.5 + index * 0.3 }}
-                    >
-                      <motion.div
-                        className="w-6 h-6 bg-blue-500/20 rounded-full flex items-center justify-center mt-0.5 border border-blue-500/30"
-                        animate={{ scale: [1, 1.2, 1] }}
-                        transition={{ delay: 2 + index * 0.3, duration: 0.5 }}
-                      >
-                        <span className="text-blue-400 font-medium text-sm">
-                          {index + 1}
-                        </span>
-                      </motion.div>
-                      <p className="text-slate-300">{item}</p>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-
-              <motion.p
-                className="text-center text-slate-400"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 3 }}
+              <motion.div
+                whileHover={
+                  shouldReduceMotion
+                    ? {}
+                    : {
+                        scale: 1.05,
+                        boxShadow: "0 10px 30px rgba(255,255,255,0.2)",
+                      }
+                }
+                whileTap={shouldReduceMotion ? {} : { scale: 0.95 }}
               >
-                <span className="font-medium text-purple-400">
-                  SideQuestAI:
-                </span>{" "}
-                Generates a complete 12-week course with actionable milestones
-              </motion.p>
+                <Button
+                  size="lg"
+                  asChild
+                  className="w-full sm:w-auto bg-white text-black hover:bg-gray-200"
+                >
+                  <Link to="/download">
+                    <Play className="w-5 h-5 mr-2" />
+                    Get Started Free
+                  </Link>
+                </Button>
+              </motion.div>
+              <motion.div
+                whileHover={
+                  shouldReduceMotion
+                    ? {}
+                    : {
+                        scale: 1.05,
+                        borderColor: "rgba(255,255,255,0.8)",
+                      }
+                }
+                whileTap={shouldReduceMotion ? {} : { scale: 0.95 }}
+              >
+                <Button
+                  variant="outline"
+                  size="lg"
+                  asChild
+                  className="w-full sm:w-auto border-gray-600 hover:bg-white/10"
+                >
+                  <Link to="/pricing">
+                    View Plans
+                    <ChevronRight className="w-5 h-5 ml-2" />
+                  </Link>
+                </Button>
+              </motion.div>
             </motion.div>
           </motion.div>
         </motion.div>
       </section>
 
-      {/* Stats Section */}
-      <section ref={statsRef} className="py-20 relative z-10">
+      {/* Stats */}
+      <section ref={statsRef} className="py-12 border-y border-gray-800/30">
         <motion.div
-          className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8"
           variants={containerVariants}
           initial="hidden"
           animate={statsInView ? "visible" : "hidden"}
+          className="container mx-auto px-4 sm:px-6 lg:px-8"
         >
-          <motion.div
-            className="grid grid-cols-2 md:grid-cols-4 gap-8"
-            variants={containerVariants}
-          >
-            {[
-              { number: 10000, suffix: "+", label: "Courses Generated" },
-              { number: 5000, suffix: "+", label: "Success Stories" },
-              { number: 95, suffix: "%", label: "Success Rate" },
-              { number: 24, suffix: "/7", label: "AI Availability" },
-            ].map((stat, index) => (
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {stats.map((stat, index) => (
               <motion.div
                 key={index}
                 variants={itemVariants}
-                className="text-center glass p-6 rounded-xl hover-lift glow-purple"
-                whileHover={{ scale: 1.05 }}
+                whileHover={
+                  shouldReduceMotion
+                    ? {}
+                    : {
+                        scale: 1.05,
+                        y: -5,
+                      }
+                }
+                className="text-center"
               >
                 <motion.div
-                  className="text-4xl font-bold text-gradient mb-2"
-                  animate={{ scale: [1, 1.1, 1] }}
+                  whileHover={
+                    shouldReduceMotion
+                      ? {}
+                      : {
+                          scale: 1.1,
+                        }
+                  }
+                  className="w-12 h-12 mx-auto mb-4 bg-white/10 rounded-full flex items-center justify-center"
+                >
+                  <stat.icon className="w-6 h-6 text-white" />
+                </motion.div>
+                <motion.div
+                  className="text-2xl sm:text-3xl font-bold text-white mb-2"
+                  animate={
+                    shouldReduceMotion
+                      ? {}
+                      : {
+                          textShadow: [
+                            "0 0 10px rgba(255,255,255,0.5)",
+                            "0 0 20px rgba(255,255,255,0.8)",
+                            "0 0 10px rgba(255,255,255,0.5)",
+                          ],
+                        }
+                  }
                   transition={{
-                    delay: index * 0.2,
-                    duration: 2,
+                    duration: 4,
                     repeat: Infinity,
+                    delay: index * 0.5,
                   }}
                 >
-                  <AnimatedCounter
-                    target={stat.number}
-                    suffix={stat.suffix}
-                    startAnimation={statsInView}
-                  />
+                  {stat.value}
                 </motion.div>
-                <p className="text-slate-400 text-sm">{stat.label}</p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </motion.div>
-      </section>
-
-      {/* How It Works */}
-      <section className="py-20 relative z-10">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-5xl font-display font-bold mb-6">
-              How{" "}
-              <span className="text-gradient">SideQuestAI</span> Works
-            </h2>
-            <p className="text-xl text-slate-400 max-w-2xl mx-auto">
-              Three simple steps to transform any side hustle idea into a
-              structured learning path
-            </p>
-          </motion.div>
-
-          <div className="grid lg:grid-cols-3 gap-8">
-            {[
-              {
-                icon: Target,
-                title: "1. Share Your Idea",
-                description:
-                  "Tell our AI about the side hustle you want to pursue. Be as specific or general as you like.",
-                gradient: "from-blue-500 to-purple-600",
-                delay: 0,
-              },
-              {
-                icon: Brain,
-                title: "2. AI Generates Course",
-                description:
-                  "Our AI analyzes your idea and creates a comprehensive course with clear milestones and action steps.",
-                gradient: "from-purple-500 to-pink-600",
-                delay: 0.2,
-              },
-              {
-                icon: Rocket,
-                title: "3. Start Building",
-                description:
-                  "Follow your personalized roadmap and track your progress as you build your side hustle.",
-                gradient: "from-pink-500 to-red-500",
-                delay: 0.4,
-              },
-            ].map((step, index) => (
-              <motion.div
-                key={index}
-                className="text-center group"
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: step.delay }}
-                viewport={{ once: true }}
-              >
-                <motion.div
-                  className={`w-20 h-20 bg-gradient-to-br ${step.gradient} rounded-2xl flex items-center justify-center mx-auto mb-6 glow group-hover:scale-110 transition-transform duration-300`}
-                  variants={floatVariants}
-                  animate="animate"
-                  whileHover={{ scale: 1.2, rotate: 5 }}
-                >
-                  <step.icon className="w-10 h-10 text-white" />
-                </motion.div>
-
-                <h3 className="text-2xl font-display font-bold mb-4 text-white">
-                  {step.title}
-                </h3>
-
-                <p className="text-lg text-slate-400 leading-relaxed">
-                  {step.description}
-                </p>
+                <div className="text-sm text-gray-400">{stat.label}</div>
               </motion.div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </section>
 
-      {/* Features Grid */}
-      <section ref={featuresRef} className="py-20 relative z-10">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Features */}
+      <section ref={featuresRef} id="features" className="py-16 sm:py-24">
+        <motion.div
+          style={{ scale: shouldReduceMotion ? 1 : scaleParallax }}
+          className="container mx-auto px-4 sm:px-6 lg:px-8"
+        >
           <motion.div
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-5xl font-display font-bold mb-6">
-              Why Choose{" "}
-              <span className="text-gradient">SideQuestAI?</span>
-            </h2>
-            <p className="text-xl text-slate-400 max-w-2xl mx-auto">
-              Cutting-edge AI technology meets practical business education
-            </p>
-          </motion.div>
-
-          <motion.div
-            id="features"
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
             variants={containerVariants}
             initial="hidden"
             animate={featuresInView ? "visible" : "hidden"}
+            className="text-center mb-16"
           >
-            {[
-              {
-                icon: Zap,
-                title: "Instant Course Generation",
-                description:
-                  "Get a complete course outline in seconds, not weeks. Our AI understands business fundamentals and market dynamics.",
-                color: "blue",
-                featureKey: "aiGeneration" as keyof typeof features,
-              },
-              {
-                icon: Target,
-                title: "Clear Milestones",
-                description:
-                  "Break down complex business goals into achievable steps with specific deadlines and success metrics.",
-                color: "purple",
-                featureKey: "milestones" as keyof typeof features,
-              },
-              {
-                icon: Users,
-                title: "Personalized Learning",
-                description:
-                  "Courses adapt to your experience level, available time, and learning preferences for maximum effectiveness.",
-                color: "pink",
-                featureKey: "collaboration" as keyof typeof features,
-              },
-              {
-                icon: TrendingUp,
-                title: "Market Intelligence",
-                description:
-                  "Get insights into market trends, competition analysis, and proven strategies for your specific niche.",
-                color: "green",
-                featureKey: "analytics" as keyof typeof features,
-              },
-              {
-                icon: Bot,
-                title: "Continuous Updates",
-                description:
-                  "Your course evolves as you progress, with new recommendations and adjustments based on your achievements.",
-                color: "cyan",
-                featureKey: "aiGeneration" as keyof typeof features,
-              },
-              {
-                icon: Code2,
-                title: "Action-Oriented",
-                description:
-                  "Every lesson includes specific tasks and deliverables to keep you moving forward with real progress.",
-                color: "orange",
-                featureKey: "milestones" as keyof typeof features,
-              },
-            ].map((feature, index) => (
+            <motion.h2
+              variants={itemVariants}
+              className="text-3xl sm:text-4xl font-bold mb-4"
+            >
+              Everything You Need to Succeed
+            </motion.h2>
+            <motion.p
+              variants={itemVariants}
+              className="text-lg text-gray-300 max-w-2xl mx-auto"
+            >
+              Our AI-powered platform provides all the tools and guidance you
+              need to turn your ideas into profitable businesses.
+            </motion.p>
+          </motion.div>
+
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate={featuresInView ? "visible" : "hidden"}
+            className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+          >
+            {features.map((feature, index) => (
               <motion.div
                 key={index}
-                variants={itemVariants}
-                whileHover={{
-                  y: -12,
-                  scale: 1.03,
-                  rotateY: 5,
-                  transition: {
-                    type: "spring",
-                    stiffness: 300,
-                    damping: 20,
-                  },
+                variants={cardVariants}
+                whileHover="hover"
+                className="cursor-pointer"
+                style={{
+                  willChange: shouldReduceMotion ? "auto" : "transform",
                 }}
               >
-                <Card
-                  className="p-6 watery-card border-2 border-white/10 hover:border-white/30 glow h-full group cursor-pointer elastic-hover"
-                  onClick={() => handleFeatureClick(feature.featureKey)}
-                >
-                  <CardHeader className="pb-4">
+                <Card className="bg-gradient-to-br from-white/10 to-white/5 border-gray-800/50 hover:border-gray-600/50 backdrop-blur-sm h-full">
+                  <CardHeader>
                     <motion.div
-                      className={`w-12 h-12 bg-${feature.color}-500/20 rounded-xl flex items-center justify-center mb-4 border border-${feature.color}-500/30`}
-                      whileHover={{ scale: 1.1, rotate: 5 }}
-                      transition={{ type: "spring", stiffness: 300 }}
+                      whileHover={
+                        shouldReduceMotion
+                          ? {}
+                          : {
+                              scale: 1.1,
+                            }
+                      }
+                      transition={{ duration: 0.3 }}
+                      className="w-12 h-12 bg-white/10 rounded-lg flex items-center justify-center mb-4"
                     >
-                      <feature.icon
-                        className={`w-6 h-6 text-${feature.color}-400`}
-                      />
+                      <feature.icon className="w-6 h-6 text-white" />
                     </motion.div>
-                    <CardTitle className="text-xl font-display font-semibold text-white group-hover:text-gradient transition-all duration-300 flex items-center justify-between">
+                    <CardTitle className="text-white">
                       {feature.title}
-                      <ExternalLink className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <CardDescription className="text-base text-slate-400 group-hover:text-slate-300 transition-colors duration-300">
+                    <CardDescription className="text-gray-300">
                       {feature.description}
                     </CardDescription>
                   </CardContent>
@@ -658,193 +648,221 @@ const Index = () => {
               </motion.div>
             ))}
           </motion.div>
-        </div>
+        </motion.div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 relative z-10">
+      {/* Benefits */}
+      <section ref={benefitsRef} className="py-16 sm:py-24 bg-gray-900/20">
         <motion.div
-          className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8"
-          initial={{ opacity: 0, scale: 0.8 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
+          variants={containerVariants}
+          initial="hidden"
+          animate={benefitsInView ? "visible" : "hidden"}
+          className="container mx-auto px-4 sm:px-6 lg:px-8"
         >
-          <motion.div
-            className="glass p-16 rounded-3xl border-2 border-white/20 glow-pink relative overflow-hidden"
-            whileHover={{ scale: 1.02 }}
-            transition={{ type: "spring", stiffness: 200 }}
-          >
-            {/* Background animation */}
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10"
-              animate={{
-                backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"],
-              }}
-              transition={{
-                duration: 8,
-                repeat: Infinity,
-                ease: "linear",
-              }}
-            />
-
-            <div className="relative z-10">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-12">
               <motion.h2
-                className="text-5xl font-display font-bold mb-6 text-white"
-                animate={{
-                  textShadow: [
-                    "0 0 20px rgba(255,255,255,0.5)",
-                    "0 0 40px rgba(255,255,255,0.8)",
-                    "0 0 20px rgba(255,255,255,0.5)",
-                  ],
-                }}
-                transition={{ duration: 3, repeat: Infinity }}
+                variants={itemVariants}
+                className="text-3xl sm:text-4xl font-bold mb-4"
               >
-                Ready to Turn Your Idea Into Reality?
+                What's Included
               </motion.h2>
-
-              <p className="text-xl text-slate-300 mb-8 max-w-2xl mx-auto leading-relaxed">
-                Join the AI-powered revolution in entrepreneurial education.
-                Your side hustle journey starts with a single click.
-              </p>
-
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <MorphingButton size="lg" onClick={handleStartJourney}>
-                  <Download className="w-5 h-5" />
-                  Download SideQuestAI
-                </MorphingButton>
-
-                <Link to="/pricing">
-                  <MorphingButton variant="secondary" size="lg">
-                    <Rocket className="w-5 h-5" />
-                    View Plans
-                  </MorphingButton>
-                </Link>
-              </div>
+              <motion.p
+                variants={itemVariants}
+                className="text-lg text-gray-300"
+              >
+                Every plan comes with these essential features
+              </motion.p>
             </div>
-          </motion.div>
+            <motion.div
+              variants={containerVariants}
+              className="grid md:grid-cols-2 gap-6"
+            >
+              {benefits.map((benefit, index) => (
+                <motion.div
+                  key={index}
+                  variants={itemVariants}
+                  whileHover={
+                    shouldReduceMotion
+                      ? {}
+                      : {
+                          scale: 1.02,
+                          x: 10,
+                        }
+                  }
+                  className="flex items-center space-x-3"
+                >
+                  <motion.div
+                    whileHover={
+                      shouldReduceMotion
+                        ? {}
+                        : {
+                            scale: 1.1,
+                          }
+                    }
+                    className="w-5 h-5 bg-white rounded-full flex items-center justify-center flex-shrink-0"
+                  >
+                    <Check className="w-3 h-3 text-black" />
+                  </motion.div>
+                  <span className="text-gray-300">{benefit}</span>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* CTA */}
+      <section ref={ctaRef} className="py-16 sm:py-24">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate={ctaInView ? "visible" : "hidden"}
+          className="container mx-auto px-4 sm:px-6 lg:px-8"
+        >
+          <div className="max-w-3xl mx-auto text-center">
+            <motion.h2
+              variants={itemVariants}
+              className="text-3xl sm:text-4xl font-bold mb-6"
+            >
+              Ready to Start Your Side Quest?
+            </motion.h2>
+            <motion.p
+              variants={itemVariants}
+              className="text-lg text-gray-300 mb-8"
+            >
+              Join thousands of entrepreneurs who are building successful side
+              businesses with SideQuestAI.
+            </motion.p>
+            <motion.div
+              variants={itemVariants}
+              className="flex flex-col sm:flex-row gap-4 justify-center"
+            >
+              <motion.div
+                whileHover={
+                  shouldReduceMotion
+                    ? {}
+                    : {
+                        scale: 1.05,
+                        boxShadow: "0 10px 30px rgba(255,255,255,0.3)",
+                      }
+                }
+                whileTap={shouldReduceMotion ? {} : { scale: 0.95 }}
+              >
+                <Button
+                  size="lg"
+                  asChild
+                  className="w-full sm:w-auto bg-white text-black hover:bg-gray-200"
+                >
+                  <Link to="/download">
+                    <Download className="w-5 h-5 mr-2" />
+                    Download SideQuestAI
+                  </Link>
+                </Button>
+              </motion.div>
+              <motion.div
+                whileHover={
+                  shouldReduceMotion
+                    ? {}
+                    : {
+                        scale: 1.05,
+                        borderColor: "rgba(255,255,255,0.8)",
+                      }
+                }
+                whileTap={shouldReduceMotion ? {} : { scale: 0.95 }}
+              >
+                <Button
+                  variant="outline"
+                  size="lg"
+                  asChild
+                  className="w-full sm:w-auto border-gray-600 hover:bg-white/10"
+                >
+                  <Link to="/pricing">
+                    View Pricing Plans
+                    <ArrowRight className="w-5 h-5 ml-2" />
+                  </Link>
+                </Button>
+              </motion.div>
+            </motion.div>
+          </div>
         </motion.div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-slate-900/50 glass border-t border-white/10 text-white py-16 relative z-10">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <motion.footer
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
+        className="border-t border-gray-800/30 py-12"
+      >
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
-            className="grid md:grid-cols-4 gap-8 mb-8"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true }}
+            className="grid md:grid-cols-4 gap-8"
           >
-            <div className="col-span-2">
-              <motion.div className="mb-4" whileHover={{ scale: 1.05 }}>
-                <DynamicLogo />
-              </motion.div>
-              <p className="text-slate-400 mb-4 max-w-sm">
-                Empowering entrepreneurs with AI-driven education for successful
-                side hustles.
+            <motion.div variants={itemVariants} className="md:col-span-2">
+              <div className="text-xl font-bold text-white mb-4">
+                SideQuestAI
+              </div>
+              <p className="text-gray-400 max-w-md">
+                The AI-powered platform that helps you turn ideas into
+                profitable side businesses with step-by-step guidance.
               </p>
-            </div>
-
-            <div>
-              <h3 className="font-display font-semibold mb-4 text-white">
-                Product
-              </h3>
-              <div className="space-y-2 text-slate-400">
-                <Link
-                  to="/download"
-                  className="block hover:text-white transition-colors duration-300 hover:translate-x-1"
-                >
-                  Download
-                </Link>
-                <Link
-                  to="/pricing"
-                  className="block hover:text-white transition-colors duration-300 hover:translate-x-1"
-                >
-                  Pricing
-                </Link>
-                <a
-                  href="#"
-                  className="block hover:text-white transition-colors duration-300 hover:translate-x-1"
-                >
-                  Features
-                </a>
-                <a
-                  href="#"
-                  className="block hover:text-white transition-colors duration-300 hover:translate-x-1"
-                >
-                  How it Works
-                </a>
+            </motion.div>
+            <motion.div variants={itemVariants}>
+              <h3 className="font-semibold mb-4">Product</h3>
+              <div className="space-y-2">
+                {["Pricing", "Download"].map((item) => (
+                  <motion.div
+                    key={item}
+                    whileHover={shouldReduceMotion ? {} : { x: 5 }}
+                  >
+                    <Link
+                      to={`/${item.toLowerCase()}`}
+                      className="block text-gray-400 hover:text-white transition-colors"
+                    >
+                      {item}
+                    </Link>
+                  </motion.div>
+                ))}
               </div>
-            </div>
-
-            <div>
-              <h3 className="font-display font-semibold mb-4 text-white">
-                Support
-              </h3>
-              <div className="space-y-2 text-slate-400">
-                <a
-                  href="#"
-                  className="block hover:text-white transition-colors duration-300 hover:translate-x-1"
-                >
-                  Help Center
-                </a>
-                <a
-                  href="#"
-                  className="block hover:text-white transition-colors duration-300 hover:translate-x-1"
-                >
-                  Contact
-                </a>
-                <a
-                  href="#"
-                  className="block hover:text-white transition-colors duration-300 hover:translate-x-1"
-                >
-                  Privacy
-                </a>
+            </motion.div>
+            <motion.div variants={itemVariants}>
+              <h3 className="font-semibold mb-4">Legal</h3>
+              <div className="space-y-2">
+                {["Privacy", "Terms", "Refund"].map((item) => (
+                  <motion.div
+                    key={item}
+                    whileHover={shouldReduceMotion ? {} : { x: 5 }}
+                  >
+                    <Link
+                      to={`/${item.toLowerCase()}`}
+                      className="block text-gray-400 hover:text-white transition-colors"
+                    >
+                      {item} {item === "Privacy" && "Policy"}
+                      {item === "Terms" && " of Service"}
+                      {item === "Refund" && " Policy"}
+                    </Link>
+                  </motion.div>
+                ))}
               </div>
-            </div>
+            </motion.div>
           </motion.div>
-
-          <div className="border-t border-slate-700/50 pt-8 flex flex-col md:flex-row justify-between items-center">
-            <p className="text-slate-400 text-sm">
-              © 2024 SideQuestAI. All rights reserved.
-            </p>
-            <div className="flex space-x-6 mt-4 md:mt-0">
-              <motion.div whileHover={{ scale: 1.1 }}>
-                <Link
-                  to="/terms"
-                  className="text-slate-400 hover:text-white transition-colors duration-300"
-                >
-                  Terms
-                </Link>
-              </motion.div>
-              <motion.div whileHover={{ scale: 1.1 }}>
-                <Link
-                  to="/privacy"
-                  className="text-slate-400 hover:text-white transition-colors duration-300"
-                >
-                  Privacy
-                </Link>
-              </motion.div>
-              <motion.div whileHover={{ scale: 1.1 }}>
-                <Link
-                  to="/refund"
-                  className="text-slate-400 hover:text-white transition-colors duration-300"
-                >
-                  Refund
-                </Link>
-              </motion.div>
-            </div>
-          </div>
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ delay: 0.5, duration: 0.6 }}
+            viewport={{ once: true }}
+            className="border-t border-gray-800/30 mt-8 pt-8 text-center text-gray-400"
+          >
+            <p>&copy; 2024 SideQuestAI. All rights reserved.</p>
+          </motion.div>
         </div>
-      </footer>
-
-      {/* Feature Showcase Modal */}
-      <FeatureShowcase
-        isOpen={isFeatureModalOpen}
-        onClose={() => setIsFeatureModalOpen(false)}
-        feature={selectedFeature}
-      />
+      </motion.footer>
     </div>
   );
 };

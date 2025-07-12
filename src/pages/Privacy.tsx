@@ -1,12 +1,62 @@
-import React from "react";
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
+import { ArrowLeft, Shield, Eye, Lock, Database } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Shield, ArrowLeft, Mail, Lock, Eye, Database } from "lucide-react";
-import DynamicLogo from "@/components/ui/dynamic-logo";
-import Particles from "@/components/ui/particles";
-import { appConfig } from "@/config/app.config";
+import { useRef } from "react";
 
 const Privacy = () => {
+  const headerRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  const headerInView = useInView(headerRef, { once: true, threshold: 0.3 });
+  const contentInView = useInView(contentRef, { once: true, threshold: 0.1 });
+
+  const sections = [
+    {
+      icon: Shield,
+      title: "Information We Collect",
+      content: [
+        "Account information (email, name, profile details)",
+        "Usage data and analytics to improve our services",
+        "Payment information (processed securely by third parties)",
+        "Course content and progress data",
+        "Device and browser information for optimization",
+      ],
+    },
+    {
+      icon: Eye,
+      title: "How We Use Your Information",
+      content: [
+        "Provide and improve SideQuestAI services",
+        "Generate personalized AI-powered course content",
+        "Process payments and manage subscriptions",
+        "Send important updates and notifications",
+        "Analyze usage patterns to enhance user experience",
+      ],
+    },
+    {
+      icon: Lock,
+      title: "Data Protection & Security",
+      content: [
+        "All data is encrypted in transit and at rest",
+        "We use industry-standard security measures",
+        "Regular security audits and compliance checks",
+        "Limited access to personal data by authorized personnel only",
+        "Secure data centers with 24/7 monitoring",
+      ],
+    },
+    {
+      icon: Database,
+      title: "Data Sharing & Third Parties",
+      content: [
+        "We never sell your personal information",
+        "Limited sharing with trusted service providers",
+        "Payment processors for subscription management",
+        "Analytics providers for service improvement",
+        "Legal compliance when required by law",
+      ],
+    },
+  ];
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -19,10 +69,11 @@ const Privacy = () => {
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 30, scale: 0.9 },
     visible: {
       opacity: 1,
       y: 0,
+      scale: 1,
       transition: {
         duration: 0.6,
         ease: [0.25, 0.46, 0.45, 0.94],
@@ -31,271 +82,246 @@ const Privacy = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      {/* Background Effects */}
-      <div className="fixed inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950" />
-        <Particles count={30} />
+    <div className="min-h-screen bg-black text-white">
+      {/* Animated Background */}
+      <div className="fixed inset-0 pointer-events-none">
+        <motion.div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255,255,255,0.06) 1px, transparent 0)`,
+            backgroundSize: "50px 50px",
+          }}
+          animate={{
+            backgroundPosition: ["0px 0px", "50px 50px"],
+          }}
+          transition={{
+            duration: 30,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+        />
+        {[...Array(5)].map((_, i) => (
+          <motion.div
+            key={i}
+            className={`absolute w-${20 + i * 4} h-${20 + i * 4} bg-white/${3 - i} rounded-full blur-xl`}
+            style={{
+              left: `${10 + i * 20}%`,
+              top: `${20 + i * 15}%`,
+            }}
+            animate={{
+              y: [-20, 20, -20],
+              x: [-10, 10, -10],
+              scale: [1, 1.1, 1],
+            }}
+            transition={{
+              duration: 8 + i * 2,
+              repeat: Infinity,
+              delay: i * 1.2,
+            }}
+          />
+        ))}
       </div>
 
       {/* Navigation */}
-      <nav className="sticky top-0 z-50 glass border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <Link to="/">
-              <DynamicLogo animate={true} />
-            </Link>
-            <div className="flex items-center space-x-6">
-              <Link
-                to="/"
-                className="text-slate-300 hover:text-white transition-colors font-medium relative group"
+      <motion.nav
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="border-b border-gray-800/30 bg-black/80 backdrop-blur-xl relative z-10"
+      >
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex h-16 items-center justify-between">
+            <Link to="/" className="flex items-center space-x-2">
+              <motion.div
+                whileHover={{ scale: 1.1, rotate: 5 }}
+                whileTap={{ scale: 0.9 }}
               >
-                <ArrowLeft className="w-4 h-4 mr-1 inline" />
-                Back to Home
+                <ArrowLeft className="w-5 h-5" />
+              </motion.div>
+              <motion.span
+                className="text-xl font-bold text-white"
+                animate={{
+                  textShadow: [
+                    "0 0 20px rgba(255,255,255,0.5)",
+                    "0 0 40px rgba(255,255,255,0.8)",
+                    "0 0 20px rgba(255,255,255,0.5)",
+                  ],
+                }}
+                transition={{ duration: 3, repeat: Infinity }}
+              >
+                SideQuestAI
+              </motion.span>
+            </Link>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Link
+                to="/download"
+                className="text-gray-300 hover:text-white transition-colors"
+              >
+                Download App
               </Link>
-            </div>
+            </motion.div>
           </div>
         </div>
-      </nav>
+      </motion.nav>
 
-      {/* Content */}
-      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      {/* Header */}
+      <section ref={headerRef} className="py-12 sm:py-20 relative z-10">
         <motion.div
           variants={containerVariants}
           initial="hidden"
-          animate="visible"
+          animate={headerInView ? "visible" : "hidden"}
+          className="container mx-auto px-4 sm:px-6 lg:px-8"
         >
-          {/* Header */}
-          <motion.div variants={itemVariants} className="text-center mb-12">
-            <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6 glow">
-              <Shield className="w-8 h-8 text-white" />
-            </div>
-            <h1 className="text-4xl sm:text-5xl font-display font-bold text-white mb-4">
+          <div className="max-w-3xl mx-auto text-center">
+            <motion.h1
+              variants={itemVariants}
+              className="text-4xl sm:text-5xl font-bold mb-6"
+              animate={{
+                backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+              }}
+              transition={{ duration: 6, repeat: Infinity }}
+              style={{
+                background: "linear-gradient(45deg, #fff, #888, #fff)",
+                backgroundSize: "200% 200%",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}
+            >
               Privacy Policy
-            </h1>
-            <p className="text-xl text-slate-400 max-w-2xl mx-auto">
+            </motion.h1>
+            <motion.p
+              variants={itemVariants}
+              className="text-lg text-gray-300 mb-4"
+              animate={{
+                opacity: [0.8, 1, 0.8],
+              }}
+              transition={{ duration: 4, repeat: Infinity }}
+            >
               Your privacy is important to us. This policy explains how we
               collect, use, and protect your information.
-            </p>
-            <p className="text-sm text-slate-500 mt-4">
+            </motion.p>
+            <motion.p variants={itemVariants} className="text-sm text-gray-400">
               Last updated: December 2024
-            </p>
-          </motion.div>
-
-          {/* Content Sections */}
-          <motion.div
-            variants={itemVariants}
-            className="glass p-8 rounded-2xl border border-white/20 space-y-8"
-          >
-            {/* Information We Collect */}
-            <div>
-              <div className="flex items-center mb-4">
-                <Database className="w-6 h-6 text-blue-400 mr-3" />
-                <h2 className="text-2xl font-display font-bold text-white">
-                  Information We Collect
-                </h2>
-              </div>
-              <div className="space-y-4 text-slate-300">
-                <p>
-                  We collect information you provide directly to us, such as
-                  when you:
-                </p>
-                <ul className="list-disc list-inside space-y-2 ml-4">
-                  <li>Create an account or sign up for our services</li>
-                  <li>Use our AI course generation features</li>
-                  <li>Contact us for support or feedback</li>
-                  <li>Subscribe to our newsletter or communications</li>
-                </ul>
-                <p>
-                  This may include your name, email address, course preferences,
-                  and usage data to improve our AI recommendations.
-                </p>
-              </div>
-            </div>
-
-            {/* How We Use Information */}
-            <div>
-              <div className="flex items-center mb-4">
-                <Eye className="w-6 h-6 text-purple-400 mr-3" />
-                <h2 className="text-2xl font-display font-bold text-white">
-                  How We Use Your Information
-                </h2>
-              </div>
-              <div className="space-y-4 text-slate-300">
-                <p>We use the information we collect to:</p>
-                <ul className="list-disc list-inside space-y-2 ml-4">
-                  <li>
-                    Provide, maintain, and improve our AI-powered course
-                    generation services
-                  </li>
-                  <li>
-                    Personalize your learning experience and course
-                    recommendations
-                  </li>
-                  <li>
-                    Send you technical notices, updates, and administrative
-                    messages
-                  </li>
-                  <li>Respond to your comments, questions, and requests</li>
-                  <li>Monitor and analyze trends and usage patterns</li>
-                  <li>
-                    Detect, investigate, and prevent fraudulent activities
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            {/* Data Security */}
-            <div>
-              <div className="flex items-center mb-4">
-                <Lock className="w-6 h-6 text-green-400 mr-3" />
-                <h2 className="text-2xl font-display font-bold text-white">
-                  Data Security
-                </h2>
-              </div>
-              <div className="space-y-4 text-slate-300">
-                <p>
-                  We implement appropriate technical and organizational measures
-                  to protect your personal information against unauthorized
-                  access, alteration, disclosure, or destruction.
-                </p>
-                <ul className="list-disc list-inside space-y-2 ml-4">
-                  <li>End-to-end encryption for all data transmission</li>
-                  <li>Regular security audits and penetration testing</li>
-                  <li>Secure data centers with SOC 2 compliance</li>
-                  <li>Limited access controls and employee training</li>
-                </ul>
-              </div>
-            </div>
-
-            {/* Information Sharing */}
-            <div>
-              <h2 className="text-2xl font-display font-bold text-white mb-4">
-                Information Sharing
-              </h2>
-              <div className="space-y-4 text-slate-300">
-                <p>
-                  We do not sell, trade, or otherwise transfer your personal
-                  information to third parties, except:
-                </p>
-                <ul className="list-disc list-inside space-y-2 ml-4">
-                  <li>With your explicit consent</li>
-                  <li>
-                    To service providers who assist in our operations (under
-                    strict confidentiality agreements)
-                  </li>
-                  <li>
-                    When required by law or to protect our rights and safety
-                  </li>
-                  <li>In connection with a business transfer or acquisition</li>
-                </ul>
-              </div>
-            </div>
-
-            {/* Your Rights */}
-            <div>
-              <h2 className="text-2xl font-display font-bold text-white mb-4">
-                Your Rights
-              </h2>
-              <div className="space-y-4 text-slate-300">
-                <p>You have the right to:</p>
-                <ul className="list-disc list-inside space-y-2 ml-4">
-                  <li>Access, update, or delete your personal information</li>
-                  <li>Opt-out of marketing communications</li>
-                  <li>Request data portability or restriction of processing</li>
-                  <li>Lodge a complaint with supervisory authorities</li>
-                </ul>
-                <p>
-                  To exercise these rights, contact us at{" "}
-                  <a
-                    href={`mailto:${appConfig.contact.email}`}
-                    className="text-blue-400 hover:text-blue-300"
-                  >
-                    {appConfig.contact.email}
-                  </a>
-                </p>
-              </div>
-            </div>
-
-            {/* Cookies */}
-            <div>
-              <h2 className="text-2xl font-display font-bold text-white mb-4">
-                Cookies and Tracking
-              </h2>
-              <div className="space-y-4 text-slate-300">
-                <p>We use cookies and similar technologies to:</p>
-                <ul className="list-disc list-inside space-y-2 ml-4">
-                  <li>Remember your preferences and settings</li>
-                  <li>Analyze site traffic and usage patterns</li>
-                  <li>Improve our AI algorithms and user experience</li>
-                  <li>Provide targeted content and features</li>
-                </ul>
-                <p>
-                  You can control cookies through your browser settings, though
-                  some features may not function properly if disabled.
-                </p>
-              </div>
-            </div>
-
-            {/* Updates */}
-            <div>
-              <h2 className="text-2xl font-display font-bold text-white mb-4">
-                Policy Updates
-              </h2>
-              <div className="space-y-4 text-slate-300">
-                <p>
-                  We may update this Privacy Policy from time to time. We will
-                  notify you of any material changes by posting the new policy
-                  on this page and updating the "Last updated" date.
-                </p>
-                <p>
-                  Your continued use of our services after any changes
-                  constitutes acceptance of the updated policy.
-                </p>
-              </div>
-            </div>
-
-            {/* Contact */}
-            <div className="border-t border-white/10 pt-6">
-              <div className="flex items-center mb-4">
-                <Mail className="w-6 h-6 text-pink-400 mr-3" />
-                <h2 className="text-2xl font-display font-bold text-white">
-                  Contact Us
-                </h2>
-              </div>
-              <div className="space-y-4 text-slate-300">
-                <p>
-                  If you have any questions about this Privacy Policy, please
-                  contact us:
-                </p>
-                <div className="bg-slate-800/50 p-4 rounded-lg">
-                  <p>
-                    <strong>Email:</strong>{" "}
-                    <a
-                      href={`mailto:${appConfig.contact.email}`}
-                      className="text-blue-400 hover:text-blue-300"
-                    >
-                      {appConfig.contact.email}
-                    </a>
-                  </p>
-                  <p>
-                    <strong>Company:</strong> {appConfig.branding.name}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </motion.div>
+            </motion.p>
+          </div>
         </motion.div>
-      </div>
+      </section>
+
+      {/* Content */}
+      <section ref={contentRef} className="py-16 relative z-10">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate={contentInView ? "visible" : "hidden"}
+          className="container mx-auto px-4 sm:px-6 lg:px-8"
+        >
+          <div className="max-w-4xl mx-auto space-y-12">
+            {sections.map((section, index) => (
+              <motion.div
+                key={index}
+                variants={itemVariants}
+                whileHover={{
+                  scale: 1.02,
+                  backgroundColor: "rgba(255,255,255,0.05)",
+                }}
+                className="p-8 rounded-lg transition-all duration-300 border border-gray-800/30"
+              >
+                <div className="flex items-center mb-6">
+                  <motion.div
+                    animate={{
+                      rotate: [0, 360],
+                      scale: [1, 1.1, 1],
+                    }}
+                    transition={{
+                      duration: 4,
+                      repeat: Infinity,
+                      delay: index * 0.5,
+                    }}
+                    className="w-12 h-12 bg-white/10 rounded-lg flex items-center justify-center mr-4"
+                  >
+                    <section.icon className="w-6 h-6 text-white" />
+                  </motion.div>
+                  <h2 className="text-2xl font-bold">{section.title}</h2>
+                </div>
+                <ul className="space-y-3">
+                  {section.content.map((item, itemIndex) => (
+                    <motion.li
+                      key={itemIndex}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.1 * itemIndex }}
+                      whileHover={{ x: 5 }}
+                      className="flex items-start text-gray-300"
+                    >
+                      <span className="mr-3 mt-2 w-1 h-1 bg-white rounded-full flex-shrink-0"></span>
+                      {item}
+                    </motion.li>
+                  ))}
+                </ul>
+              </motion.div>
+            ))}
+
+            {/* Additional Sections */}
+            <motion.div
+              variants={itemVariants}
+              whileHover={{
+                scale: 1.02,
+                backgroundColor: "rgba(255,255,255,0.05)",
+              }}
+              className="p-8 rounded-lg transition-all duration-300 border border-gray-800/30"
+            >
+              <h2 className="text-2xl font-bold mb-4">Your Rights</h2>
+              <div className="text-gray-300 space-y-3">
+                <p>• Access and review your personal data</p>
+                <p>• Request corrections to inaccurate information</p>
+                <p>• Delete your account and associated data</p>
+                <p>• Export your data in a portable format</p>
+                <p>• Opt-out of marketing communications</p>
+              </div>
+            </motion.div>
+
+            <motion.div
+              variants={itemVariants}
+              whileHover={{
+                scale: 1.02,
+                backgroundColor: "rgba(255,255,255,0.05)",
+              }}
+              className="p-8 rounded-lg transition-all duration-300 border border-gray-800/30"
+            >
+              <h2 className="text-2xl font-bold mb-4">Contact Us</h2>
+              <div className="text-gray-300">
+                <p className="mb-2">
+                  If you have questions about this Privacy Policy, contact us:
+                </p>
+                <p>Email: sidequestaiofficial@gmail.com</p>
+                <p>We'll respond within 48 hours.</p>
+              </div>
+            </motion.div>
+          </div>
+        </motion.div>
+      </section>
 
       {/* Footer */}
-      <footer className="bg-slate-900/50 glass border-t border-white/10 text-white py-8 relative z-10">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-slate-400 text-sm">
-            © 2024 {appConfig.branding.name}. All rights reserved.
-          </p>
+      <motion.footer
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
+        className="border-t border-gray-800/30 py-8 relative z-10"
+      >
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            className="text-center text-gray-400"
+            animate={{
+              opacity: [0.6, 1, 0.6],
+            }}
+            transition={{ duration: 3, repeat: Infinity }}
+          >
+            <p>&copy; 2024 SideQuestAI. All rights reserved.</p>
+          </motion.div>
         </div>
-      </footer>
+      </motion.footer>
     </div>
   );
 };
