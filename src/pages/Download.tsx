@@ -28,12 +28,11 @@ const DownloadPage = () => {
   const downloadsRef = useRef<HTMLDivElement>(null);
   const featuresRef = useRef<HTMLDivElement>(null);
 
-  const heroInView = useInView(heroRef, { once: true, threshold: 0.3 });
+  const heroInView = useInView(heroRef, { once: true });
   const downloadsInView = useInView(downloadsRef, {
     once: true,
-    threshold: 0.1,
   });
-  const featuresInView = useInView(featuresRef, { once: true, threshold: 0.1 });
+  const featuresInView = useInView(featuresRef, { once: true });
 
   const [userAgent, setUserAgent] = useState("");
   const [isMobile, setIsMobile] = useState(false);
@@ -60,7 +59,7 @@ const DownloadPage = () => {
       platform: "Windows",
       icon: Monitor,
       description: "Desktop app for Windows 10+",
-      url: "https://github.com/SideQuestAI/web/releases/download/v1.0.0/SideQuestAI-Windows.exe",
+      url: "",
       size: "125 MB",
       recommended: platform === "windows",
       tag: "Most Popular",
@@ -78,7 +77,7 @@ const DownloadPage = () => {
       platform: "Android",
       icon: Smartphone,
       description: "Mobile app for Android 8+",
-      url: "https://play.google.com/store/apps/details?id=com.sidequestai.app",
+      url: "https://raw.githubusercontent.com/SideQuestAI/sidequestai.github.io/main/public/SideQuestAI.android.apk",
       size: "45 MB",
       recommended: platform === "android",
       tag: "Mobile",
@@ -87,7 +86,7 @@ const DownloadPage = () => {
       platform: "iOS",
       icon: Tablet,
       description: "Mobile app for iOS 14+",
-      url: "https://apps.apple.com/app/sidequestai/id123456789",
+      url: "",
       size: "50 MB",
       recommended: platform === "ios",
       tag: "Mobile",
