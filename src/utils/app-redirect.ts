@@ -1,5 +1,5 @@
 // App redirect utility for Android Intent URLs
-export const APP_PACKAGE_NAME = "com.sidequestai.app"; // Replace with your actual package name
+export const APP_PACKAGE_NAME = "com.example.sidequestai"; // Replace with your actual package name
 export const APP_DEEP_LINK_SCHEME = "sidequestai"; // Replace with your actual deep link scheme
 
 export interface AppRedirectOptions {

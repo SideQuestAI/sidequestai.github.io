@@ -80,7 +80,7 @@ const DownloadPage = () => {
       icon: Smartphone,
       description: "Mobile app for Android 8+",
       url: "https://raw.githubusercontent.com/SideQuestAI/sidequestai.github.io/main/public/SideQuestAI.android.apk",
-      size: "45 MB",
+      size: "27.3 MB",
       recommended: platform === "android",
       tag: "Mobile",
     },
@@ -119,12 +119,12 @@ const DownloadPage = () => {
   ];
 
   const handleDownload = (url: string, platformName: string) => {
-    // For Android, try to redirect to app first
+    // For Android, try to redirect to app first, but with shorter timeout
     if (platformName.toLowerCase() === "android") {
       const redirected = redirectToApp("/download", {
         fallbackUrl: url,
-        timeout: 1500,
-        showFallbackButton: true
+        timeout: 1000,
+        showFallbackButton: false
       });
       
       if (redirected) {
@@ -133,10 +133,10 @@ const DownloadPage = () => {
     }
     
     // Fallback to direct download
-    if (url.includes("github.com")) {
+    if (url && url.trim() !== "") {
       window.open(url, "_blank");
     } else {
-      window.open(url, "_blank");
+      console.warn("Download URL is empty for platform:", platformName);
     }
   };
 
