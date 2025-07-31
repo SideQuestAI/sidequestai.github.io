@@ -79,7 +79,7 @@ const DownloadPage = () => {
       platform: "Android",
       icon: Smartphone,
       description: "Mobile app for Android 8+",
-      url: "https://raw.githubusercontent.com/SideQuestAI/sidequestai.github.io/main/public/SideQuestAI.android.apk",
+      url: "https://raw.githubusercontent.com/SideQuestAI/sidequestai.github.io/main/public/downloads/SideQuestAI-Android.apk",
       size: "27.3 MB",
       recommended: platform === "android",
       tag: "Mobile",
