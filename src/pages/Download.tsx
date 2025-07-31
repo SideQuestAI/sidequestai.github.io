@@ -119,20 +119,22 @@ const DownloadPage = () => {
   ];
 
   const handleDownload = (url: string, platformName: string) => {
-    // For Android, try to redirect to app first, but with shorter timeout
+    // For Android, directly download the APK
     if (platformName.toLowerCase() === "android") {
-      const redirected = redirectToApp("/download", {
-        fallbackUrl: url,
-        timeout: 1000,
-        showFallbackButton: false
-      });
-      
-      if (redirected) {
-        return; // App redirect was attempted
+      if (url && url.trim() !== "") {
+        // Create a temporary link element to trigger download
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'SideQuestAI.android.apk';
+        link.target = '_blank';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        return;
       }
     }
     
-    // Fallback to direct download
+    // For other platforms, use normal download
     if (url && url.trim() !== "") {
       window.open(url, "_blank");
     } else {
