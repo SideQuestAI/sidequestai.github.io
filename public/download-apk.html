@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download SideQuestAI APK</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 16px;
+            margin: 0 auto 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        h1 {
+            color: #1f2937;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .subtitle {
+            color: #6b7280;
+            font-size: 16px;
+            margin-bottom: 32px;
+        }
+        
+        .download-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 16px;
+            transition: transform 0.2s;
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .download-btn:active {
+            transform: translateY(0);
+        }
+        
+        .instructions {
+            background: #f3f4f6;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: left;
+            margin-top: 24px;
+        }
+        
+        .instructions h3 {
+            color: #1f2937;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        
+        .instructions ol {
+            color: #6b7280;
+            font-size: 14px;
+            line-height: 1.6;
+            padding-left: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 8px;
+        }
+        
+        .file-info {
+            background: #e5e7eb;
+            padding: 12px;
+            border-radius: 8px;
+            margin: 16px 0;
+            font-size: 14px;
+            color: #374151;
+        }
+        
+        .back-link {
+            color: #6b7280;
+            text-decoration: none;
+            font-size: 14px;
+            margin-top: 16px;
+            display: inline-block;
+        }
+        
+        .back-link:hover {
+            color: #374151;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">SQ</div>
+        <h1>Download SideQuestAI</h1>
+        <p class="subtitle">Get the latest version for Android</p>
+        
+        <div class="file-info">
+            <strong>File:</strong> SideQuestAI.android.apk<br>
+            <strong>Size:</strong> 27.3 MB<br>
+            <strong>Version:</strong> 1.0.0
+        </div>
+        
+        <button class="download-btn" onclick="downloadAPK()">
+            Download APK
+        </button>
+        
+        <div class="instructions">
+            <h3>Installation Instructions:</h3>
+            <ol>
+                <li>Tap the download button above</li>
+                <li>Allow downloads from this source if prompted</li>
+                <li>Open the downloaded APK file</li>
+                <li>Enable "Install from unknown sources" if needed</li>
+                <li>Follow the installation prompts</li>
+            </ol>
+        </div>
+        
+        <a href="/download" class="back-link">← Back to Downloads</a>
+    </div>
+
+    <script>
+        function downloadAPK() {
+            const apkUrl = 'https://raw.githubusercontent.com/SideQuestAI/sidequestai.github.io/main/public/SideQuestAI.android.apk';
+            
+            // Try multiple download methods
+            try {
+                // Method 1: Direct link
+                const link = document.createElement('a');
+                link.href = apkUrl;
+                link.download = 'SideQuestAI.android.apk';
+                link.target = '_blank';
+                link.rel = 'noopener noreferrer';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                // Method 2: Open in new tab as fallback
+                setTimeout(() => {
+                    window.open(apkUrl, '_blank');
+                }, 100);
+                
+            } catch (error) {
+                console.error('Download failed:', error);
+                // Fallback to direct URL
+                window.open(apkUrl, '_blank');
+            }
+        }
+        
+        // Auto-download after 2 seconds on mobile
+        if (/Android/i.test(navigator.userAgent) && /Mobile/i.test(navigator.userAgent)) {
+            setTimeout(() => {
+                downloadAPK();
+            }, 2000);
+        }
+    </script>
+</body>
+</html> 
