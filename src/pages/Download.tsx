@@ -129,15 +129,8 @@ const DownloadPage = () => {
           // On mobile Android, redirect to dedicated download page
           window.location.href = '/download-apk.html';
         } else {
-          // On desktop or tablet, try direct download
-          const link = document.createElement('a');
-          link.href = url;
-          link.download = 'SideQuestAI.android.apk';
-          link.target = '_blank';
-          link.rel = 'noopener noreferrer';
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
+          // On desktop or tablet, redirect directly to APK URL
+          window.location.href = url;
         }
         return;
       }

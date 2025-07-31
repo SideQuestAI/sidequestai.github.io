@@ -13,7 +13,7 @@
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #000000;
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -22,19 +22,20 @@
         }
         
         .container {
-            background: white;
+            background: #111111;
+            border: 1px solid #333333;
             border-radius: 16px;
             padding: 32px;
             max-width: 400px;
             width: 100%;
             text-align: center;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
         }
         
         .logo {
             width: 80px;
             height: 80px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
             border-radius: 16px;
             margin: 0 auto 24px;
             display: flex;
@@ -46,20 +47,20 @@
         }
         
         h1 {
-            color: #1f2937;
+            color: #ffffff;
             font-size: 24px;
             font-weight: 600;
             margin-bottom: 8px;
         }
         
         .subtitle {
-            color: #6b7280;
+            color: #9ca3af;
             font-size: 16px;
             margin-bottom: 32px;
         }
         
         .download-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
             color: white;
             border: none;
             padding: 16px 32px;
@@ -81,7 +82,8 @@
         }
         
         .instructions {
-            background: #f3f4f6;
+            background: #1f1f1f;
+            border: 1px solid #333333;
             padding: 20px;
             border-radius: 12px;
             text-align: left;
@@ -89,14 +91,14 @@
         }
         
         .instructions h3 {
-            color: #1f2937;
+            color: #ffffff;
             font-size: 16px;
             font-weight: 600;
             margin-bottom: 12px;
         }
         
         .instructions ol {
-            color: #6b7280;
+            color: #9ca3af;
             font-size: 14px;
             line-height: 1.6;
             padding-left: 20px;
@@ -107,16 +109,17 @@
         }
         
         .file-info {
-            background: #e5e7eb;
+            background: #1f1f1f;
+            border: 1px solid #333333;
             padding: 12px;
             border-radius: 8px;
             margin: 16px 0;
             font-size: 14px;
-            color: #374151;
+            color: #9ca3af;
         }
         
         .back-link {
-            color: #6b7280;
+            color: #9ca3af;
             text-decoration: none;
             font-size: 14px;
             margin-top: 16px;
@@ -124,7 +127,7 @@
         }
         
         .back-link:hover {
-            color: #374151;
+            color: #ffffff;
         }
     </style>
 </head>
@@ -162,35 +165,15 @@
         function downloadAPK() {
             const apkUrl = 'https://raw.githubusercontent.com/SideQuestAI/sidequestai.github.io/main/public/SideQuestAI.android.apk';
             
-            // Try multiple download methods
-            try {
-                // Method 1: Direct link
-                const link = document.createElement('a');
-                link.href = apkUrl;
-                link.download = 'SideQuestAI.android.apk';
-                link.target = '_blank';
-                link.rel = 'noopener noreferrer';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                
-                // Method 2: Open in new tab as fallback
-                setTimeout(() => {
-                    window.open(apkUrl, '_blank');
-                }, 100);
-                
-            } catch (error) {
-                console.error('Download failed:', error);
-                // Fallback to direct URL
-                window.open(apkUrl, '_blank');
-            }
+            // Direct redirect to the APK URL - this will trigger download
+            window.location.href = apkUrl;
         }
         
-        // Auto-download after 2 seconds on mobile
+        // Auto-download after 1 second on mobile
         if (/Android/i.test(navigator.userAgent) && /Mobile/i.test(navigator.userAgent)) {
             setTimeout(() => {
                 downloadAPK();
-            }, 2000);
+            }, 1000);
         }
     </script>
 </body>
