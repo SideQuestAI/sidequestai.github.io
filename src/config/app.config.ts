@@ -34,7 +34,7 @@ export const appConfig = {
       version: "1.0.0",
     },
     android: {
-      link: "https://raw.githubusercontent.com/SideQuestAI/sidequestai.github.io/main/public/SideQuestAI.android.apk",
+      link: "https://raw.githubusercontent.com/SideQuestAI/sidequestai.github.io/main/public/downloads/SideQuestAI-Android.apk",
       version: "1.0.0",
     },
 
