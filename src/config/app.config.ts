@@ -35,7 +35,7 @@ export const appConfig = {
     },
     android: {
       link: "https://raw.githubusercontent.com/SideQuestAI/sidequestai.github.io/main/public/downloads/SideQuestAI-Android.apk",
-      version: "1.0.0",
+      version: "1.0.1",
     },
 
     // Desktop - Direct file downloads from GitHub releases or CDN
