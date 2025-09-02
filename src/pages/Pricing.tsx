@@ -132,11 +132,12 @@ const Pricing = () => {
     if (planName === "Free") {
       window.location.href = "/download";
     } else if (planName === "Essential") {
-      window.location.href = "PUT_ESSENTIAL_URL_HERE";
+      window.location.href = "https://sidequestai.gumroad.com/l/essential?wanted=true";
     } else if (planName === "Pro") {
-      window.location.href = "PUT_PRO_URL_HERE";
+      window.location.href = "https://sidequestai.gumroad.com/l/pro?wanted=true";
     } else if (planName === "Ultimate") {
-      window.location.href = "PUT_ULTIMATE_URL_HERE";
+      window.location.href = "https://sidequestai.gumroad.com/l/ultimate?wanted=true
+";
     }
   };
 
