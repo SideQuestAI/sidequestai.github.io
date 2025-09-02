@@ -136,8 +136,7 @@ const Pricing = () => {
     } else if (planName === "Pro") {
       window.location.href = "https://sidequestai.gumroad.com/l/pro?wanted=true";
     } else if (planName === "Ultimate") {
-      window.location.href = "https://sidequestai.gumroad.com/l/ultimate?wanted=true
-";
+      window.location.href = "https://sidequestai.gumroad.com/l/ultimate?wanted=true";
     }
   };
 
