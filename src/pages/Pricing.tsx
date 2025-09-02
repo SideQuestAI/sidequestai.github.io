@@ -17,9 +17,9 @@ const Pricing = () => {
   const plansRef = useRef<HTMLDivElement>(null);
   const faqRef = useRef<HTMLDivElement>(null);
 
-  const headerInView = useInView(headerRef, { once: true, threshold: 0.3 });
-  const plansInView = useInView(plansRef, { once: true, threshold: 0.1 });
-  const faqInView = useInView(faqRef, { once: true, threshold: 0.3 });
+  const headerInView = useInView(headerRef, { once: true });
+  const plansInView = useInView(plansRef, { once: true });
+  const faqInView = useInView(faqRef, { once: true });
   const shouldReduceMotion = useReducedMotion();
 
   const plans = [
@@ -131,8 +131,12 @@ const Pricing = () => {
   const handlePlanSelect = (planName: string) => {
     if (planName === "Free") {
       window.location.href = "/download";
-    } else {
-      alert(`Selected ${planName} plan. This would redirect to payment.`);
+    } else if (planName === "Essential") {
+      window.location.href = "PUT_ESSENTIAL_URL_HERE";
+    } else if (planName === "Pro") {
+      window.location.href = "PUT_PRO_URL_HERE";
+    } else if (planName === "Ultimate") {
+      window.location.href = "PUT_ULTIMATE_URL_HERE";
     }
   };
 
