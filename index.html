@@ -4,6 +4,187 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SideQuestAI - AI-Powered Side Hustle Learning Platform</title>
+    
+<link rel="alternate" type="application/json" id="seatext-syndication-link-json" title="Content Syndication Feed (JSON)" href="PLACEHOLDER_FOR_JS" />
+<noscript>
+  <link rel="alternate" type="application/json" title="Content Syndication Feed (JSON)" href="https://api.seatext.com/syndication/resolve?cid=fb8a4c7d-73eb-437d-a0ad-4f68e00fba63&format=json" />
+  <link rel="alternate" type="text/html" title="Content Syndication Feed (HTML)" href="https://api.seatext.com/syndication/resolve?cid=fb8a4c7d-73eb-437d-a0ad-4f68e00fba63&format=html" />
+</noscript>
+<script>
+(function(w,d){
+    'use strict';
+    try {
+        const pageUrl = w.location.href;
+        const encodedUrl = btoa(pageUrl);
+        const jsonLink = d.getElementById('seatext-syndication-link-json');
+        if (jsonLink) {
+            const finalUrl = 'https://api.seatext.com/syndication.json?cid=fb8a4c7d-73eb-437d-a0ad-4f68e00fba63&url=' + encodedUrl;
+            jsonLink.href = finalUrl;
+        }
+    } catch(e) {}
+    const msb="https://login.seatext.com/seatext.js";
+    const kwp=['seatextonly','seatextdont','seatexttranslateoff','seatextconversion'];
+    let ko=null;
+    let os=false;
+    let pn;
+    let domContentLoadedListener = null;
+    let stopTimeout = null;
+
+    w.globalSeatextID="fb8a4c7d-73eb-437d-a0ad-4f68e00fba63";
+    w.seatextId="fb8a4c7d-73eb-437d-a0ad-4f68e00fba63";
+    const cid=w.seatextId||w.globalSeatextID||"0000_PRELOADER_FALLBACK";
+
+    function p(n,kw){
+        if(n&&n.setAttribute)n.setAttribute('data-'+kw,"true");
+    }
+
+    function r(s,kw){
+        return s.replace(new RegExp(kw.replace(/[-\/\\^$*+?.()|[\]{}]/g,'\\$&'),'g'),'');
+    }
+
+    function pkn(n){
+        if(!n||(pn&&pn.has(n))) return;
+        try{
+            if(n.nodeType===3){
+                const parentEl = n.parentElement;
+                if(!parentEl||parentEl.tagName==='SCRIPT'||parentEl.tagName==='STYLE'){
+                    if(pn) pn.add(n);
+                    return;
+                }
+                let originalFullText=n.textContent;
+                let modified=false;
+                const match=originalFullText.match(/^(\s*)([\s\S]*?)(\s*)$/);
+                let leadingWS='', coreText=originalFullText, trailingWS='';
+                if(match){leadingWS=match[1]||'';coreText=match[2]||'';trailingWS=match[3]||'';}
+                let newCoreText=coreText;
+                kwp.forEach(kw=>{
+                    if(newCoreText.includes(kw)){p(parentEl,kw);newCoreText=r(newCoreText,kw);modified=true;}
+                });
+                if(modified){
+                    const trimmedNewCoreText=newCoreText.trim();
+                    const finalText=leadingWS+trimmedNewCoreText+trailingWS;
+                    if(n.textContent!==finalText){n.textContent=finalText;}
+                }
+                if(pn) pn.add(n);
+            } else if(n.nodeType===1 && n.hasAttribute){
+                const a={'A':['href','title'],'BUTTON':['title'],'INPUT':['placeholder','value','title'],'TEXTAREA':['placeholder','title'],'IFRAME':['title'],'*':['title']};
+                const tn=n.tagName;
+                const sa=a[tn]||[];
+                const ga=a['*'];
+                const aa=[...new Set([...sa,...ga])];
+                aa.forEach(at=>{
+                    if(n.hasAttribute(at)){
+                        let v = n.getAttribute(at);
+                        let m = false;
+                        kwp.forEach(kw=>{
+                            if(v && v.includes(kw)){p(n,kw);v=r(v,kw);m=true;}
+                        });
+                        if(m) n.setAttribute(at, v.trim());
+                    }
+                });
+                if(pn) pn.add(n);
+            }
+        } catch(e) {
+            if(pn && n) pn.add(n);
+        }
+    }
+
+    function ssk(n){
+        if(!n) return;
+        pkn(n);
+        if(n.nodeType===1){
+            if(n.shadowRoot){for(let c=n.shadowRoot.firstChild;c;c=c.nextSibling)ssk(c);}
+            for(let c=n.firstChild;c;c=c.nextSibling)ssk(c);
+        }
+    }
+
+    function stko(){
+        if(ko && !os){
+            try { ko.disconnect(); } catch(e) {}
+            ko=null;
+            os=true;
+        }
+        if(domContentLoadedListener) {
+            d.removeEventListener('DOMContentLoaded', domContentLoadedListener);
+            domContentLoadedListener = null;
+        }
+        if(stopTimeout) {
+            clearTimeout(stopTimeout);
+            stopTimeout = null;
+        }
+    }
+
+    w.seatextPreloaderComplete = function() {
+        stko();
+    };
+    
+    function sko(){
+        if(ko) return;
+        try {
+            ko = new MutationObserver((ml)=>{
+                if(os) return;
+                pn = new WeakSet();
+                ml.forEach(m=>{
+                    if(m.type==='childList'){m.addedNodes.forEach(node => ssk(node));}
+                    else if (m.type==='attributes'){
+                        const ra=['title','placeholder','value','href'];
+                        if(ra.includes(m.attributeName)) pkn(m.target);
+                    }
+                    else if (m.type==='characterData' && m.target.nodeType===3){pkn(m.target);}
+                });
+            });
+            ko.observe(d.documentElement,{childList:true,subtree:true,attributes:true,attributeFilter:['title','placeholder','value','href'],characterData:true});
+
+            if(d.body) {
+                 pn = new WeakSet();
+                 ssk(d.body);
+            } else {
+                const initialScan = ()=>{
+                    if(d.body) {
+                         pn = new WeakSet();
+                         ssk(d.body);
+                    }
+                };
+                d.addEventListener('DOMContentLoaded',initialScan,{once:true});
+            }
+        } catch (e) {
+            const fallbackScan = ()=>{
+                 if(d.body) {
+                    pn = new WeakSet();
+                    ssk(d.body);
+                 }
+            };
+            d.addEventListener('DOMContentLoaded',fallbackScan,{once:true});
+        }
+    }
+
+    function lms(){
+        try{
+            const u=encodeURIComponent(w.location.href);
+            const t=new Date().toISOString();
+            const l=navigator.language||navigator.userLanguage||'en';
+            const z=new Date().getTimezoneOffset();
+            const rf=encodeURIComponent(d.referrer);
+            const s=d.createElement("script");
+            const su=msb+'?id='+cid+'&url='+u+'&time='+t+'&lang='+l+'&tz='+z+'&ref='+rf;
+            s.async=true;
+            s.src=su;
+            s.onerror=()=>{};
+            (d.head||d.documentElement).appendChild(s);
+        }catch(e){}
+    }
+
+    sko();
+    
+    domContentLoadedListener = stko; 
+    d.addEventListener('DOMContentLoaded', domContentLoadedListener, {once:true});
+    stopTimeout = setTimeout(stko, 5000); 
+
+    lms();
+
+})(window,document);
+</script>
+
   </head>
 
   <body>
